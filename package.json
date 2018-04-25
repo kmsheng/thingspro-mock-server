@@ -30,6 +30,6 @@
     "js-yaml": "^3.5.3",
     "json-refs": "^2.1.5",
     "lodash": "^4.4.0",
-    "swagger-express-middleware": "sanji-io/swagger-express-middleware"
+    "swagger-express-middleware": "1.0.0-alpha.12"
   }
 }
