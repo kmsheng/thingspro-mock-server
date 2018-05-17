@@ -1,0 +1,488 @@
+swagger: '2.0'
+info:
+  title: ThingsPro Cloud Server RESTful API Reference
+  description: Manage your ThingsPro Cloud Gateways
+  version: 0.0.2
+host: localhost
+schemes:
+  - https
+  - http
+basePath: /api/v1
+produces:
+  - application/json
+tags:
+  - name: device
+    description: Cloud Gateway management
+  - name: deviceTasks
+    description: Remote Task
+securityDefinitions:
+  mx-api-token:
+    type: apiKey
+    name: mx-api-token
+    in: header
+    description: 'ThingsPro RESTful API token, The token should be created on web console.'
+paths:
+  /devices:
+    get:
+      tags:
+        - device
+      security:
+        - mx-api-token: []
+      description: >-
+        The Devices endpoint returns information about the *ThingsPro* gateway
+        information.
+      parameters:
+        - name: offset
+          in: query
+          description: offset
+          required: false
+          type: number
+          format: integer
+        - name: limit
+          in: query
+          description: |
+            max return devices count (default: 20)
+          required: false
+          type: number
+          format: integer
+      responses:
+        '200':
+          description: An array of gateways
+          schema:
+            $ref: '#/definitions/DeviceList'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/DeviceList'
+    post:
+      tags:
+        - device
+      security:
+        - mx-api-token: []
+      description: Create (register) a new device to ThingsPro Cloud Server.
+      parameters:
+        - name: body
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/Device'
+      responses:
+        '200':
+          description: An array of gateways
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Device'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/DeviceCreated'
+    delete:
+      tags:
+        - device
+      security:
+        - mx-api-token: []
+      description: Delete (de-register) devices from ThingsPro Cloud Server.
+      parameters:
+        - name: body
+          in: body
+          description: Delete ids
+          required: true
+          schema:
+            $ref: '#/definitions/DeviceUUIDs'
+      responses:
+        '200':
+          description: success
+  /devices/{uuid}':
+    parameters:
+      - name: uuid
+        in: path
+        description: Device unique identifier
+        required: true
+        type: string
+    get:
+      security:
+        - mx-api-token: []
+      tags:
+        - device
+      description: Return Device with given UUID
+      responses:
+        '200':
+          description: An Object of the device
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Device'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/Device'
+    delete:
+      tags:
+        - device
+      security:
+        - mx-api-token: []
+      description: Delete Device with given UUID
+      responses:
+        '200':
+          description: success
+  /deviceTasks:
+    post:
+      tags:
+        - deviceTasks
+      security:
+        - mx-api-token: []
+      description: Create a remote task to target device
+      consumes:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: Remote task
+          required: true
+          schema:
+            $ref: '#/definitions/DeviceTaskCreate'
+      responses:
+        '200':
+          description: Response of remote task
+          schema:
+            $ref: '#/definitions/DeviceTaskResp'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/DeviceTaskResp'
+    put:
+      tags:
+        - deviceTasks
+      security:
+        - mx-api-token: []
+      description: >
+        Create a remote task (with files) to target device
+
+        Note: This is a pseudo method because OpenAPI 2.0's limitation, please
+        use method **POST instead of PUT**.
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: files
+          in: formData
+          type: file
+          description: Upload files with fieldname (files is only for example)
+          required: false
+        - name: jsonData
+          in: formData
+          type: string
+          description: JSON string of payload
+          required: false
+      responses:
+        '200':
+          description: Response of remote task
+          schema:
+            $ref: '#/definitions/DeviceTaskResp'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/DeviceTaskResp'
+  /system/curate:
+    put:
+      tags:
+        - system
+      security:
+        - mx-api-token: []
+      description: Modify server security setting
+      parameters:
+        - name: body
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/Curate'
+      responses:
+        '200':
+          description: Response of put security setting
+    get:
+      tags:
+        - system
+      security:
+        - mx-api-token: []
+      description: Get server security setting
+      responses:
+        '200':
+          description: An Object of the security setting
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Curate'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/Curate'          
+definitions:
+  Device:
+    type: object
+    properties:
+      uuid:
+        type: string
+        readOnly: true
+        description: Unique identifier representing a specific device.
+      description:
+        type: string
+        description: Description of device.
+      displayName:
+        type: string
+        description: Display name of device.
+      mac:
+        type: string
+        description: MAC address of device.
+      iccId:
+        type: string
+        description: Cellular ICCID
+      serialNumber:
+        type: string
+        description: Serial number of device.
+      psk:
+        type: string
+        readOnly: true
+        description: >-
+          MQTT Broker TLS PSK credential. (this property exist only exist as a
+          creating response)
+      connection:
+        type: object
+        readOnly: true
+        description: Device's latest connection status
+      properties:
+        type: object
+        readOnly: true
+        description: Device's latest system properties
+    example:
+      $ref: '#/externalDocs/x-mocks/Device'
+  DeviceList:
+    type: object
+    properties:
+      count:
+        type: number
+        description: Total count of devices
+      limit:
+        type: number
+        description: query limit number
+      offset:
+        type: number
+        description: query offset number
+      data:
+        type: array
+        items:
+          - $ref: '#/definitions/Device'
+    example:
+      $ref: '#/externalDocs/x-mocks/DeviceList'
+  DeviceUUIDs:
+    type: array
+    items:
+      type: string
+      description: UUID of deivce
+      example: ded6dd9e-49d9-485b-bac1-da0ca0ae9d70
+  DeviceTaskCreate:
+    type: object
+    required:
+      - deviceUUID
+      - payload
+    properties:
+      deviceUUID:
+        description: Target device's uuid
+        type: string
+      payload:
+        type: object
+        description: >-
+          RESTful Message, for more detail please refer to ThingsPro Gateway
+          RESTful Reference
+        required:
+          - method
+          - resource
+        properties:
+          method:
+            description: method of this request message
+            type: string
+            enum:
+              - get
+              - post
+              - put
+              - delete
+          resource:
+            type: string
+            description: resource of this request message
+          data:
+            description: Body
+            allOf:
+              - type: array
+                description: array data
+                items:
+                  - type: string
+              - type: object
+                description: object data
+    example:
+      $ref: '#/externalDocs/x-mocks/DeviceTaskCreate'
+  DeviceTaskCreateForm:
+    type: object
+    properties:
+      jsonData:
+        description: Payload of request
+        type: string
+    example:
+      $ref: '#/externalDocs/x-mocks/DeviceTaskCreate'
+  DeviceTaskResp:
+    type: object
+    required:
+      - taskID
+      - code
+      - data
+      - method
+      - resource
+      - sign
+    properties:
+      taskID:
+        description: Task ID of this request
+        type: string
+      code:
+        description: status code for this request (like HTTP Status code)
+        type: number
+      method:
+        description: method of this request (like HTTP Method)
+        type: string
+        enum:
+          - get
+          - post
+          - put
+          - delete
+      resource:
+        description: resource of this request (like HTTP URI)
+        type: string
+      sign:
+        description: Who signed (processed) this message
+        type: array
+        items:
+          - type: string
+      data:
+        description: response data of this request (like HTTP Body)
+        type: object
+    example:
+      $ref: '#/externalDocs/x-mocks/DeviceTaskResp'
+  Curate:
+    type: object
+    required:
+      - maxRetry
+      - findTime
+      - banTime
+    properties:
+      maxRetry:
+        description: Retry count, it should between 1-10
+        type: number
+      findTime:
+        description: detection time interval, it should between 60-3600
+        type: number
+      banTime:
+        description: ban time, it should between 60-3600
+        type: number
+    example:
+      $ref: '#/externalDocs/x-mocks/Curate'    
+externalDocs:
+  url: 'http://#'
+  x-mocks:
+    Device:
+      uuid: ded6dd9e-49d9-485b-bac1-da0ca0ae9d70
+      description: Temperature monitoring
+      displayName: 'Gym tempture sensor #1'
+      mac: 223344FFFF11
+      iccId: 898600MFSSYYGXXXXXXP
+      serialNumber: MOXA00000001
+    DeviceCreated:
+      uuid: ded6dd9e-49d9-485b-bac1-da0ca0ae9d70
+      description: Temperature monitoring
+      displayName: 'Gym tempture sensor #1'
+      mac: 223344FFFF11
+      iccId: 898600MFSSYYGXXXXXXP
+      serialNumber: MOXA00000001
+      psk: PBKDF2$sha256$901$xl/Ws1LGqr/WV5QB$XtAQ7g12TTs5F0PWHT3yXCRLBuKU4qOb
+    DeviceList:
+      count: 3
+      data:
+        - connection:
+            createdAt: '2017-03-22T08:15:01.359380'
+            deviceUUID: 2ad0fbb8-6f53-46ea-a10a-00b7b75145d3
+            status: offline
+          createdAt: '2017-03-21T03:01:10.175584'
+          description: Device
+          displayName: ThingsPro-changed
+          mac: 223344FF8F51
+          iccId: 898600MFSSYYGXXXXXXP
+          serialNumber: MOXA00000001
+          properties:
+            aliasName: ThingsPro-changed
+            createdAt: '2017-03-22T06:41:33.195046'
+            deviceUUID: 2ad0fbb8-6f53-46ea-a10a-00b7b75145d3
+            gps:
+              lat: 0
+              lng: 0
+          updatedAt: '2017-03-22T06:19:58.475876'
+          uuid: 2ad0fbb8-6f53-46ea-a10a-00b7b75145d3
+        - connection:
+            createdAt: '2017-03-10T01:55:41.097736'
+            deviceUUID: 2730e69e-8d5a-4642-a7cf-966365f991fd
+            status: offline
+          createdAt: '2017-01-16T10:36:46.390569'
+          description: Device
+          displayName: ThingsPro
+          mac: 223344FF8F11
+          iccId: 898600MFSSYYGXXXXXXA
+          serialNumber: MOXA00000002
+          properties:
+            aliasName: ThingsPro
+            createdAt: '2017-03-09T05:38:58.925514'
+            deviceUUID: 2730e69e-8d5a-4642-a7cf-966365f991fd
+            gps:
+              lat: 0
+              lng: 0
+          updatedAt: '2017-03-20T06:32:35.814447'
+          uuid: 2730e69e-8d5a-4642-a7cf-966365f991fd
+        - connection:
+            createdAt: '2017-03-08T15:54:59.782570'
+            deviceUUID: 6292ca47-f69b-4399-8bdc-3011dc5142df
+            status: created
+          createdAt: '2017-03-08T15:54:59.782570'
+          description: Device
+          displayName: Dummy device
+          mac: 223344FF8F54
+          iccId: 898600MFSSYYGXXXXXXB
+          serialNumber: MOXA00000003
+          properties: {}
+          updatedAt: '2017-03-08T15:54:59.782570'
+          uuid: 6292ca47-f69b-4399-8bdc-3011dc5142df
+      limit: 20
+      offset: 0
+    Connection:
+      deviceUUID: ded6dd9e-49d9-485b-bac1-da0ca0ae9d70
+      status: online
+      createdAt: '2020-05-03T17:30:08+08:00'
+    DeviceTaskCreate:
+      deviceUUID: 2730e69e-8d5a-4642-a7cf-966365f991fd
+      payload:
+        method: get
+        resource: /system/services
+    DeviceTaskResp:
+      taskID: b6723b17-9497-4436-aaa6-fbba5a5d1fd0
+      code: 200
+      data:
+        - enable: true
+          id: 1
+          name: ssh
+          status: true
+        - enable: true
+          id: 2
+          name: rsyslog
+          status: true
+        - enable: true
+          id: 3
+          name: mxssdpd
+          status: true
+      id: 638000
+      method: get
+      resource: /system/services
+      sign:
+        - service
+    Curate:
+      maxRetry: 5
+      findTime: 600
+      banTime: 1200
