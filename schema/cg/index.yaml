@@ -1,12 +1,12 @@
 ---
 swagger: '2.0'
 info:
-  version: 2.5.0
+  version: "1.0.0"
   title: ThingsPro Gateway RESTful API reference
-basePath: "/api/v1"
-schemes:
-- http
-- https
+# basePath: "/api/v1"
+# schemes:
+# - http
+# - https
 produces:
 - application/json
 securityDefinitions:
@@ -184,17 +184,9 @@ paths:
                 primary:
                   apn: internet
                   type: ipv4v6
-                  auth:
-                    protocol: none
-                    username: ''
-                    password: ''
                 secondary:
                   apn: internet
                   type: ipv4v6
-                  auth:
-                    protocol: none
-                    username: ''
-                    password: ''
                 list:
                 - id: 1
                   apn: internet
@@ -265,17 +257,9 @@ paths:
                 primary:
                   apn: internet
                   type: ipv4v6
-                  auth:
-                    protocol: none
-                    username: ''
-                    password: ''
                 secondary:
                   apn: internet
                   type: ipv4v6
-                  auth:
-                    protocol: none
-                    username: ''
-                    password: ''
                 list:
                 - id: 1
                   apn: internet
@@ -346,17 +330,9 @@ paths:
                 primary:
                   apn: internet
                   type: ipv4v6
-                  auth:
-                    protocol: none
-                    username: ''
-                    password: ''
                 secondary:
                   apn: internet
                   type: ipv4v6
-                  auth:
-                    protocol: none
-                    username: ''
-                    password: ''
                 list:
                 - id: 1
                   apn: internet
@@ -607,7 +583,6 @@ paths:
                 name: eth0
                 available: false
                 enable: false
-                status: false
                 subnet: 192.168.3.0
                 netmask: 255.255.255.0
                 startIp: 192.168.3.100
@@ -641,7 +616,6 @@ paths:
               name: eth0
               available: false
               enable: false
-              status: false
               subnet: 192.168.3.0
               netmask: 255.255.255.0
               startIp: 192.168.3.100
@@ -675,7 +649,6 @@ paths:
               name: eth0
               available: false
               enable: false
-              status: false
               subnet: 192.168.3.0
               netmask: 255.255.255.0
               startIp: 192.168.3.100
@@ -1970,7 +1943,7 @@ paths:
         required: true
         schema:
           "$ref": "#/definitions/Serial"
-      description: Update serial interface configuration
+      description: Update a dhcp server configuration
       responses:
         '200':
           description: success
@@ -2413,7 +2386,7 @@ paths:
           schema:
             type: array
             items:
-              "$ref": "#/definitions/WifiIface"
+              "$ref": "#/definitions/WiFiIface"
           examples:
             application/json:
             - id: 1
@@ -2424,7 +2397,7 @@ paths:
               - ap
               mode: client
               enable: true
-              status: connected
+              status: true
               client:
                 enableDhcp: true
                 networks:
@@ -2481,7 +2454,7 @@ paths:
         '200':
           description: An WiFi interface settings.
           schema:
-            "$ref": "#/definitions/WifiIface"
+            "$ref": "#/definitions/WiFiIface"
           examples:
             application/json:
               id: 1
@@ -2492,7 +2465,7 @@ paths:
               - ap
               mode: client
               enable: true
-              status: connected
+              status: true
               client:
                 enableDhcp: true
                 networks:
@@ -2544,12 +2517,12 @@ paths:
         description: ''
         required: true
         schema:
-          "$ref": "#/definitions/WifiIface"
+          "$ref": "#/definitions/WiFiIface"
       responses:
         '200':
           description: OK
           schema:
-            "$ref": "#/definitions/WifiIface"
+            "$ref": "#/definitions/WiFiIface"
           examples:
             application/json:
               id: 1
@@ -2560,7 +2533,7 @@ paths:
               - ap
               mode: client
               enable: true
-              status: connected
+              status: true
               client:
                 enableDhcp: true
                 networks:
@@ -2619,12 +2592,12 @@ paths:
         description: ''
         required: true
         schema:
-          "$ref": "#/definitions/WifiIfaceBlacklist"
+          "$ref": "#/definitions/WiFiIfaceBlacklist"
       responses:
         '200':
           description: OK
           schema:
-            "$ref": "#/definitions/WifiIfaceBlacklist"
+            "$ref": "#/definitions/WiFiIfaceBlacklist"
           examples:
             application/json:
               id: 1
@@ -2640,13 +2613,11 @@ paths:
 '
       responses:
         '200':
-          description: 'A blacklist of an indicated WiFi AP interface.
-
-'
+          description: A blacklist of an indicated WiFi AP interface.
           schema:
             type: array
             items:
-              "$ref": "#/definitions/WifiIfaceBlacklist"
+              "$ref": "#/definitions/WiFiIfaceBlacklist"
           examples:
             application/json:
             - id: 1
@@ -2658,9 +2629,7 @@ paths:
       - mx-api-token: []
     put:
       summary: WiFi Blacklist for AP
-      description: 'Update blacklist of an indicated WiFi AP interface.
-
-'
+      description: Update blacklist of an indicated WiFi AP interface.
       parameters:
       - name: body
         in: body
@@ -2669,14 +2638,14 @@ paths:
         schema:
           type: array
           items:
-            "$ref": "#/definitions/WifiIfaceBlacklist"
+            "$ref": "#/definitions/WiFiIfaceBlacklist"
       responses:
         '200':
           description: OK
           schema:
             type: array
             items:
-              "$ref": "#/definitions/WifiIfaceBlacklist"
+              "$ref": "#/definitions/WiFiIfaceBlacklist"
           examples:
             application/json:
             - id: 1
@@ -2713,22 +2682,20 @@ paths:
       required: true
     - name: mac_id
       in: path
-      description: 'A MAC ID in a blacklist of the WiFi AP interface
-
-'
+      description: A MAC ID in a blacklist of the WiFi AP interface
       type: integer
       required: true
     get:
-      description: |
-        Get a MAC item from blacklist of an indicated WiFi AP
-        interface.
+      description: 'Get a MAC item from blacklist of an indicated WiFi AP interface.
+
+'
       responses:
         '200':
-          description: |
-            A MAC item in a blacklist of an indicated WiFi AP
-            interface.
+          description: 'A MAC item in a blacklist of an indicated WiFi AP interface.
+
+'
           schema:
-            "$ref": "#/definitions/WifiIfaceBlacklist"
+            "$ref": "#/definitions/WiFiIfaceBlacklist"
           examples:
             application/json:
               id: 1
@@ -2740,21 +2707,21 @@ paths:
       - mx-api-token: []
     put:
       summary: WiFi Blacklist item for AP
-      description: |
-        Update a MAC item in blacklist of an indicated WiFi AP
-        interface.
+      description: 'Update a MAC item in blacklist of an indicated WiFi AP interface.
+
+'
       parameters:
       - name: body
         in: body
         description: ''
         required: true
         schema:
-          "$ref": "#/definitions/WifiIfaceBlacklist"
+          "$ref": "#/definitions/WiFiIfaceBlacklist"
       responses:
         '200':
           description: OK
           schema:
-            "$ref": "#/definitions/WifiIfaceBlacklist"
+            "$ref": "#/definitions/WiFiIfaceBlacklist"
           examples:
             application/json:
               id: 1
@@ -2799,7 +2766,7 @@ paths:
           schema:
             type: array
             items:
-              "$ref": "#/definitions/WifiApInfo"
+              "$ref": "#/definitions/WiFiAP"
           examples:
             application/json:
             - ssid: test
@@ -7562,13 +7529,6 @@ paths:
                 end: 80
               intIp: 192.168.5.123
               protocol: tcp
-        '400':
-          description: Value error
-          schema:
-            "$ref": "#/definitions/Error"
-          examples:
-            application/json:
-              message: invalid port range
       tags:
       - iptables
       security:
@@ -7612,10 +7572,6 @@ paths:
                 end: 80
               intIp: 192.168.5.123
               protocol: tcp
-        '404':
-          description: Not found
-          schema:
-            "$ref": "#/definitions/Error"
       tags:
       - iptables
       security:
@@ -7652,10 +7608,6 @@ paths:
                 end: 80
               intIp: 192.168.5.123
               protocol: tcp
-        '404':
-          description: Not found
-          schema:
-            "$ref": "#/definitions/Error"
       tags:
       - iptables
       security:
@@ -7665,10 +7617,6 @@ paths:
       responses:
         '200':
           description: success
-        '404':
-          description: Not found
-          schema:
-            "$ref": "#/definitions/Error"
       tags:
       - iptables
       security:
@@ -8151,31 +8099,8 @@ definitions:
         description: PIN Retry remaining.
       status:
         type: string
-        description: |
-          Indicate current status of cellular connection.
-          - initializing: get module and SIM card info, unlock SIM card if necessary
-          - nosim: no SIM card or unknown error with SIM card status
-          - pin: SIM card is locked with a PIN code
-          - ready: SIM card is ready for connect (unlocked or lock is disabled)
-          - connecting: during connect state
-          - connect_failure: connect failed or keepalive failed (if keepalive enabled)
-          - connected: connect success with keepalive success or success with keepalive disabled
-          - power_cycle: power cycle the module to recover issues
-          - service_searching: roaming
-          - service_attached: attached with a base station
-          - pin_error: PIN code error
-        enum:
-        - initializing
-        - nosim
-        - pin
-        - ready
-        - connecting
-        - connect_failure
-        - connected
-        - power_cycle
-        - service_searching
-        - service_attached
-        - pin_error
+        description: Indicate current status of cellular connection. Could be one
+          of "nosim", "pin", "noservice", "ready", "connected", "connecting", "connect-failed".
       mac:
         type: string
         readOnly: true
@@ -8239,9 +8164,33 @@ definitions:
             minimum: 60
             maximum: 86399
           primary:
-            "$ref": "#/definitions/CellularProfileEntry"
+            type: object
+            description: Primary PDP context.
+            properties:
+              apn:
+                type: string
+                description: Edit APN of the specified PDP context.
+              type:
+                type: string
+                description: Indicate the PDP type to use.
+                enum:
+                - ipv4
+                - ipv6
+                - ipv4v6
           secondary:
-            "$ref": "#/definitions/CellularProfileEntry"
+            type: object
+            description: Secondary PDP context.
+            properties:
+              apn:
+                type: string
+                description: Edit APN of the specified PDP context.
+              type:
+                type: string
+                description: Indicate the PDP type to use.
+                enum:
+                - ipv4
+                - ipv6
+                - ipv4v6
           list:
             readOnly: true
             type: array
@@ -8346,17 +8295,9 @@ definitions:
         primary:
           apn: internet
           type: ipv4v6
-          auth:
-            protocol: none
-            username: ''
-            password: ''
         secondary:
           apn: internet
           type: ipv4v6
-          auth:
-            protocol: none
-            username: ''
-            password: ''
         list:
         - id: 1
           apn: internet
@@ -8369,46 +8310,6 @@ definitions:
         reboot:
           enable: false
           cycles: 1
-  CellularProfileEntry:
-    title: CellularProfileEntry
-    description: A profile for connection
-    required:
-    - apn
-    properties:
-      apn:
-        type: string
-        description: Edit APN of the specified PDP context.
-      type:
-        type: string
-        description: Indicate the PDP type to use.
-        enum:
-        - ipv4
-        - ipv6
-        - ipv4v6
-      auth:
-        type: object
-        description: The negotiated authentication.
-        required:
-        - protocol
-        properties:
-          protocol:
-            type: string
-            description: The negotiated authentication protocol.
-            enum:
-            - none
-            - chap
-            - pap
-            - both
-          username:
-            type: string
-            description: Username for PAP and/or CHAP.
-            minLength: 0
-            maxLength: 255
-          password:
-            type: string
-            description: Password for PAP and/or CHAP.
-            minLength: 0
-            maxLength: 255
   CellularFirmwareInfo:
     title: CellularFirmwareInfo
     description: Display current, preferred, available firmware properties, if current
@@ -8565,9 +8466,6 @@ definitions:
       enable:
         description: Enable dhcp server
         type: boolean
-      status:
-        description: DHCP Server is enable for the interface or not
-        type: boolean
       netmask:
         description: Netmask of dhcp server
         type: string
@@ -8604,7 +8502,6 @@ definitions:
       name: eth0
       available: false
       enable: false
-      status: false
       subnet: 192.168.3.0
       netmask: 255.255.255.0
       startIp: 192.168.3.100
@@ -8635,7 +8532,6 @@ definitions:
         name: eth0
         available: false
         enable: false
-        status: false
         subnet: 192.168.3.0
         netmask: 255.255.255.0
         startIp: 192.168.3.100
@@ -9429,8 +9325,6 @@ definitions:
       log: connected to xxxx
   DefaultRoute:
     title: DefaultRoute
-    required:
-    - interface
     properties:
       interface:
         type: string
@@ -9806,9 +9700,6 @@ definitions:
   Timezone:
     description: Timezone information
     type: object
-    required:
-    - zone
-    - iso3166
     properties:
       zone:
         description: TZ zone list with cca2 and TZ
@@ -9907,27 +9798,13 @@ definitions:
         url: http://192.168.31.81:5000/api/v1/download/1234
         headers:
           accessToken: MOXAMOXA-TEST-SYSTEM
-  WifiIface:
+  WiFiIface:
     title: WiFi Interface
     required:
     - id
     - enable
     - mode
     properties:
-      status:
-        description: 'WiFi status, WiFi AP only has "active" and "inactive" status.
-
-'
-        type: string
-        enum:
-        - active
-        - inactive
-        - authenticating
-        - authenticated
-        - auth_failed
-        - connecting
-        - connected
-        - disconnected
       id:
         type: integer
         description: Identifier for an WiFi interface.
@@ -9939,14 +9816,10 @@ definitions:
         description: Product model of the WiFi module.
       mode:
         type: string
-        description: |
-          Given WiFi interface mode. Could be one of `"ap"`,
-          `"client"`.
+        description: Given WiFi interface mode. Could be one of `"ap"`, `"client"`.
       capabilities:
         type: array
-        description: 'Indicate current capability that module supports.
-
-'
+        description: Indicate current capability that module supports.
         items:
           type: string
           enum:
@@ -9956,9 +9829,174 @@ definitions:
         type: boolean
         description: Enable WiFi Networking.
       ap:
-        "$ref": "#/definitions/WifiAp"
+        type: object
+        description: Configuration of WiFi AP mode.
+        required:
+        - mode
+        - ssid
+        - channel
+        - security
+        properties:
+          enableBlacklist:
+            type: boolean
+            description: Using blacklist or not.
+          mode:
+            type: string
+            enum:
+            - bg
+            - bgn
+            - ac
+          ssid:
+            type: string
+            description: SSID of a WiFi AP.
+          channel:
+            type: integer
+          security:
+            type: object
+            required:
+            - mode
+            properties:
+              mode:
+                type: string
+                enum:
+                - none
+                - wpa
+                - wpa2
+                - wpa/wpa2
+                - eap
+              encryption:
+                type: string
+                enum:
+                - tkip
+                - aes
+                - tkip/aes
+              password:
+                type: string
+                description: ASCII passphrase (8 ~ 63) or HEX pre-shared key (64)
+                  for WPA-Personal, or password for Radius.
+              radiusServerIp:
+                type: string
+                pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+              radiusServerPort:
+                type: integer
+                minimum: 1
+                maximum: 65535
+              radiusSharedSecret:
+                type: string
+          broadcastSsid:
+            type: boolean
+          shortPreamble:
+            type: boolean
+          beacon:
+            type: integer
+          ip:
+            type: string
+            pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+            description: IP address.
+          netmask:
+            type: string
+            pattern: "^(254|252|248|240|224|192|128)\\.0\\.0\\.0|255\\.(254|252|248|240|224|192|128|0)\\.0\\.0|255\\.255\\.(254|252|248|240|224|192|128|0)\\.0|255\\.255\\.255\\.(254|252|248|240|224|192|128|0)"
+            description: Subnet mask.
       client:
-        "$ref": "#/definitions/WifiClient"
+        type: object
+        description: Configuration of WiFi client mode
+        required:
+        - enableDhcp
+        - networks
+        - checkalive
+        properties:
+          enableDhcp:
+            type: boolean
+            description: 'Enable (`true`) the dhcp client or using the static IP (`false`).
+
+'
+          networks:
+            type: array
+            description: List of networks for WiFi client to connect.
+            items:
+              type: object
+              description: A WiFi AP configuration.
+              required:
+              - ssid
+              properties:
+                priority:
+                  description: "This field can be used to give higher priority for
+                    credentials\t(and similarly in struct wpa_ssid for network blocks)
+                    to change the\tInterworking automatic networking selection behavior.
+                    Default is `0`."
+                  type: integer
+                ssid:
+                  type: string
+                  description: SSID of a WiFi AP.
+                bssid:
+                  type: string
+                  description: BSSID (MAC) of a WiFi AP.
+                security:
+                  description: Security of the WiFi AP.
+                  type: string
+                  enum:
+                  - none
+                  - wep
+                  - wpa
+                  - wpa2
+                  - wpa/wpa2
+                  - eap
+                password:
+                  type: string
+                  description: Password of access point, Could be one of 1. WEP key.
+                    Length 5, 13, 16, 29 for ASCII keys or 10, 26, 32, 58 for HEX
+                    keys. 2. WPA-PSK key. ASCII passphrase (8 ~ 63) or HEX pre-shared
+                    key (64). 3. EAP key. Max length 64
+                username:
+                  type: string
+                  description: Username for EAP (Enterprise Access Point).
+                  maxLength: 64
+          ip:
+            type: string
+            pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+            description: IP address. `""` when not connected.
+          netmask:
+            type: string
+            pattern: "^(254|252|248|240|224|192|128)\\.0\\.0\\.0|255\\.(254|252|248|240|224|192|128|0)\\.0\\.0|255\\.255\\.(254|252|248|240|224|192|128|0)\\.0|255\\.255\\.255\\.(254|252|248|240|224|192|128|0)"
+            description: Subnet mask. `""` when not connected.
+          gateway:
+            type: string
+            pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+            description: Gateway IP address. `""` when not connected.
+          dns:
+            type: array
+            description: A list of DNS IP addresses. `[]` when not connected.
+            items:
+              type: string
+              pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+          usage:
+            type: object
+            description: Data usage.
+            required:
+            - txkbyte
+            - rxkbyte
+            properties:
+              txkbyte:
+                type: integer
+                description: Amount of data transmitted, in Kbytes.
+              rxkbyte:
+                type: integer
+                description: Amount of data received, in Kbytes.
+          checkalive:
+            type: object
+            description: Keep-alive configuration.
+            required:
+            - enable
+            properties:
+              enable:
+                type: boolean
+                description: Enable/disable WiFi connection keep-alive by ping.
+              targetHost:
+                type: string
+                description: IP address to ping.
+              intervalSec:
+                type: integer
+                description: Check alive interval.
     example:
       id: 1
       name: wlan0
@@ -9968,7 +10006,7 @@ definitions:
       - ap
       mode: client
       enable: true
-      status: connected
+      status: true
       client:
         enableDhcp: true
         networks:
@@ -10007,7 +10045,7 @@ definitions:
         channel: 11
         security:
           mode: none
-  WifiIfaceBlacklist:
+  WiFiIfaceBlacklist:
     title: Blacklist Item for WiFi AP Interface
     required:
     - id
@@ -10022,7 +10060,7 @@ definitions:
       description:
         type: string
         description: Description of the MAC address.
-  WifiApInfo:
+  WiFiAP:
     title: WiFi AP Information
     properties:
       bssid:
@@ -10051,188 +10089,6 @@ definitions:
         - wpa/wpa2
         - eap
         readOnly: true
-  WifiAp:
-    description: Configuration of WiFi AP mode.
-    required:
-    - mode
-    - ssid
-    - channel
-    - security
-    properties:
-      enableBlacklist:
-        type: boolean
-        description: Using blacklist or not.
-      mode:
-        type: string
-        enum:
-        - bg
-        - bgn
-        - ac
-      ssid:
-        type: string
-        description: SSID of a WiFi AP.
-      channel:
-        type: integer
-      security:
-        "$ref": "#/definitions/WifiApSecurity"
-      broadcastSsid:
-        type: boolean
-      shortPreamble:
-        type: boolean
-      beacon:
-        type: integer
-      ip:
-        "$ref": "#/definitions/IpPattern"
-      netmask:
-        "$ref": "#/definitions/NetmaskPattern"
-  WifiApSecurity:
-    required:
-    - mode
-    properties:
-      mode:
-        type: string
-        enum:
-        - none
-        - wpa
-        - wpa2
-        - wpa/wpa2
-        - eap
-      encryption:
-        type: string
-        enum:
-        - tkip
-        - aes
-        - tkip/aes
-      password:
-        type: string
-        description: |
-          ASCII passphrase (8 ~ 63) or HEX pre-shared key
-          (64) for WPA-Personal, or password for Radius.
-      radiusServerIp:
-        "$ref": "#/definitions/IpPattern"
-      radiusServerPort:
-        type: integer
-        minimum: 1
-        maximum: 65535
-      radiusSharedSecret:
-        type: string
-  WifiClient:
-    description: Configuration of WiFi client mode
-    required:
-    - enableDhcp
-    - networks
-    - checkalive
-    properties:
-      enableDhcp:
-        type: boolean
-        description: "Enable (`true`) the dhcp client or using the static \nIP (`false`).\n"
-      networks:
-        type: array
-        description: 'List of networks for WiFi client to connect.
-
-'
-        items:
-          "$ref": "#/definitions/WifiClientAp"
-      ip:
-        "$ref": "#/definitions/IpPattern"
-      netmask:
-        "$ref": "#/definitions/NetmaskPattern"
-      gateway:
-        "$ref": "#/definitions/IpPattern"
-      dns:
-        type: array
-        description: 'A list of DNS IP addresses. `[]` when not connected.
-
-'
-        items:
-          "$ref": "#/definitions/IpPattern"
-      checkalive:
-        "$ref": "#/definitions/WifiClientCheckalive"
-      usage:
-        "$ref": "#/definitions/WifiClientUsage"
-  WifiClientAp:
-    description: A WiFi AP configuration.
-    required:
-    - ssid
-    properties:
-      priority:
-        description: |
-          This field can be used to give higher priority
-          for credentials (and similarly in struct
-          wpa_ssid for network blocks) to change the
-          Interworking automatic networking selection
-          behavior. Default is `0`.
-        type: integer
-      ssid:
-        type: string
-        description: SSID of a WiFi AP.
-      bssid:
-        type: string
-        description: BSSID (MAC) of a WiFi AP.
-      security:
-        description: Security of the WiFi AP.
-        type: string
-        enum:
-        - none
-        - wep
-        - wpa
-        - wpa2
-        - wpa/wpa2
-        - eap
-      password:
-        type: string
-        description: |
-          Password of access point, Could be one of
-          1. WEP key. Length 5, 13, 16, 29 for ASCII keys
-             or 10, 26, 32, 58 for HEX keys.
-          2. WPA-PSK key. ASCII passphrase (8 ~ 63) or HEX
-             pre-shared key (64).
-          3. EAP key. Max length 64
-      username:
-        type: string
-        description: 'Username for EAP (Enterprise Access Point).
-
-'
-        maxLength: 64
-  WifiClientCheckalive:
-    description: Keep-alive configuration.
-    required:
-    - enable
-    properties:
-      enable:
-        type: boolean
-        description: 'Enable/disable WiFi connection keep-alive by ping.
-
-'
-      targetHost:
-        type: string
-        description: IP address to ping.
-      intervalSec:
-        type: integer
-        description: Check alive interval.
-  WifiClientUsage:
-    description: Data usage.
-    required:
-    - txkbyte
-    - rxkbyte
-    properties:
-      txkbyte:
-        type: integer
-        description: 'Amount of data transmitted, in Kbytes.
-
-'
-      rxkbyte:
-        type: integer
-        description: 'Amount of data received, in Kbytes.
-
-'
-  IpPattern:
-    type: string
-    pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-  NetmaskPattern:
-    type: string
-    pattern: "^(254|252|248|240|224|192|128)\\.0\\.0\\.0|255\\.(254|252|248|240|224|192|128|0)\\.0\\.0|255\\.255\\.(254|252|248|240|224|192|128|0)\\.0|255\\.255\\.255\\.(254|252|248|240|224|192|128|0)"
-    description: Subnet mask.
   EquipmentTemplate:
     title: Equipment Template
     type: object
@@ -10344,9 +10200,6 @@ definitions:
       unit:
         description: Unit of tag
         type: string
-        pattern: "[A-Za-z0-9%_-]*"
-        minLength: 0
-        maxLength: 255
       function:
         description: Function to retrieve the tag value
         type: string
@@ -10508,8 +10361,7 @@ definitions:
       deviceList: []
   ModbusConfig:
     title: Modbus Config
-    type: object
-    enum:
+    allOf:
     - "$ref": "#/definitions/ModbusTCPConfig"
     - "$ref": "#/definitions/ModbusRTUConfig"
   ModbusTCPConfig:
@@ -10526,22 +10378,10 @@ definitions:
       port:
         description: PORT of TCP modbus device
         type: integer
-      requestDelayMs:
-        description: request delay (ms)
-        type: integer
-        minimum: 0
-        maximum: 60000
-        default: 0
   ModbusRTUConfig:
     title: Modbus RTU config
     description: Modbus RTU interface config
     type: object
-    required:
-    - dev
-    - baudRate
-    - parity
-    - stopBits
-    - intercharTimeoutMs
     properties:
       dev:
         description: Physical path of modbus rtu device
@@ -10581,14 +10421,6 @@ definitions:
       intercharTimeoutMs:
         description: Inter char timeout (ms)
         type: integer
-        minimum: 0
-        maximum: 60000
-      interframeDelayMs:
-        description: Inter frame timeout (ms)
-        type: integer
-        minimum: 0
-        maximum: 60000
-        default: 0
   Device:
     title: Device
     description: Modbus device profile
@@ -10860,12 +10692,6 @@ definitions:
         end: 80
       intIp: 192.168.5.123
       protocol: tcp
-  Error:
-    title: Error
-    properties:
-      message:
-        description: Error message
-        type: string
   SSNAT:
     title: SSNAT
     required:
@@ -10940,3 +10766,9 @@ definitions:
         description: Indicate to enable (true) or disable (false) the rule.
     example:
       enable: false
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /CPtung/tpAPI/1.0.0
+schemes:
+ - https
+ - http
