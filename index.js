@@ -87,6 +87,7 @@ var createMockServer = function(options, cb) {
           middleware.CORS(),
           middleware.parseRequest(),
           middleware.validateRequest(),
+          injectMockResponse(results, options),
           middleware.mock()
         );
 
