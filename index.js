@@ -73,11 +73,11 @@ var createMockServer = function(options, cb) {
       results.resolved.paths = aggregate(results.resolved.paths);
       results.resolved.definitions = aggregate(results.resolved.definitions);
 
-      app.get('/favicon.ico', function(req, res, next) {
+      app.get('/favicon.ico', function(req, res) {
         res.status(404);
       });
 
-      app.get('/', function(req, res, next) {
+      app.get('/', function(req, res) {
         res.json(results.resolved);
       });
 
