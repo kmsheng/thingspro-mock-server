@@ -23,6 +23,38 @@ var aggregate = function(data) {
   return data;
 }
 
+var injectMockResponse = function (results, options) {
+
+  return function(req, res, next) {
+
+    const pathObj = results.resolved.paths;
+    const paths = Object.keys(pathObj);
+
+    for (const path of paths) {
+      // for example, /network/interfaces/{id} to /network/interfaces/([^/])
+      const replacedPath = path.replace(/{.+}/, '([^/]+)');
+      const matchRoute = new RegExp(`^${replacedPath}$$`).test(req.path);
+
+      if (matchRoute) {
+        const method = _.lowerCase(req.method);
+        const example = _.get(pathObj, `${path}.${method}.responses.${res.statusCode}.examples.['application/json']`);
+
+        if (! example) {
+          return next();
+        }
+
+        const shouldOverrideResponse = _.get(pathObj, `${path}.${method}.responses.${res.statusCode}.examples.['x-override-response']`);
+
+        if ((method === 'put') && shouldOverrideResponse) {
+          return res.json(Object.assign({}, example, req.body));
+        }
+        return res.json(example);
+      }
+    }
+    next();
+  }
+}
+
 var createMockServer = function(options, cb) {
   options = _.defaults(options, defaultOptions);
   var doc = YAML.load(
