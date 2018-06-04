@@ -27,8 +27,13 @@ var injectMockResponse = function (results, options) {
 
   return function(req, res, next) {
 
+    const method = _.lowerCase(req.method);
     const pathObj = results.resolved.paths;
     const paths = Object.keys(pathObj);
+
+    if (method === 'delete') {
+      return res.json(req.body);
+    }
 
     for (const path of paths) {
       // for example, /network/interfaces/{id} to /network/interfaces/([^/])
@@ -36,7 +41,6 @@ var injectMockResponse = function (results, options) {
       const matchRoute = new RegExp(`^${replacedPath}$$`).test(req.path);
 
       if (matchRoute) {
-        const method = _.lowerCase(req.method);
         const example = _.get(pathObj, `${path}.${method}.responses.${res.statusCode}.examples.['application/json']`);
 
         if (! example) {
