@@ -23,6 +23,38 @@ var aggregate = function(data) {
   return data;
 }
 
+var injectMockResponse = function (results, options) {
+
+  return function(req, res, next) {
+
+    const pathObj = results.resolved.paths;
+    const paths = Object.keys(pathObj);
+
+    for (const path of paths) {
+      // for example, /network/interfaces/{id} to /network/interfaces/([^/])
+      const replacedPath = path.replace(/{.+}/, '([^/]+)');
+      const matchRoute = new RegExp(`^${replacedPath}$$`).test(req.path);
+
+      if (matchRoute) {
+        const method = _.lowerCase(req.method);
+        const example = _.get(pathObj, `${path}.${method}.responses.${res.statusCode}.examples.['application/json']`);
+
+        if (! example) {
+          return next();
+        }
+
+        const shouldOverrideResponse = _.get(pathObj, `${path}.${method}.responses.${res.statusCode}.examples.['x-override-response']`);
+
+        if ((method === 'put') && shouldOverrideResponse) {
+          return res.json(Object.assign({}, example, req.body));
+        }
+        return res.json(example);
+      }
+    }
+    next();
+  }
+}
+
 var createMockServer = function(options, cb) {
   options = _.defaults(options, defaultOptions);
   var doc = YAML.load(
@@ -41,11 +73,11 @@ var createMockServer = function(options, cb) {
       results.resolved.paths = aggregate(results.resolved.paths);
       results.resolved.definitions = aggregate(results.resolved.definitions);
 
-      app.get('/favicon.ico', function(req, res, next) {
+      app.get('/favicon.ico', function(req, res) {
         res.status(404);
       });
 
-      app.get('/', function(req, res, next) {
+      app.get('/', function(req, res) {
         res.json(results.resolved);
       });
 
@@ -55,6 +87,7 @@ var createMockServer = function(options, cb) {
           middleware.CORS(),
           middleware.parseRequest(),
           middleware.validateRequest(),
+          injectMockResponse(results, options),
           middleware.mock()
         );
 

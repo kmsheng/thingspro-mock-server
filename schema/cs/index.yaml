@@ -50,8 +50,7 @@ paths:
           description: An array of gateways
           schema:
             $ref: '#/definitions/DeviceList'
-          examples:
-            application/json:
+            example:
               $ref: '#/externalDocs/x-mocks/DeviceList'
     post:
       tags:
@@ -73,8 +72,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Device'
-          examples:
-            application/json:
+            example:
               $ref: '#/externalDocs/x-mocks/DeviceCreated'
     delete:
       tags:
@@ -112,8 +110,7 @@ paths:
             type: object
             items:
               $ref: '#/definitions/Device'
-          examples:
-            application/json:
+            example:
               $ref: '#/externalDocs/x-mocks/Device'
     delete:
       tags:
@@ -145,8 +142,7 @@ paths:
           description: Response of remote task
           schema:
             $ref: '#/definitions/DeviceTaskResp'
-          examples:
-            application/json:
+            example:
               $ref: '#/externalDocs/x-mocks/DeviceTaskResp'
     put:
       tags:
@@ -176,8 +172,7 @@ paths:
           description: Response of remote task
           schema:
             $ref: '#/definitions/DeviceTaskResp'
-          examples:
-            application/json:
+            example:
               $ref: '#/externalDocs/x-mocks/DeviceTaskResp'
   /system/curate:
     put:
@@ -209,9 +204,8 @@ paths:
             type: object
             items:
               $ref: '#/definitions/Curate'
-          examples:
-            application/json:
-              $ref: '#/externalDocs/x-mocks/Curate'          
+            example:
+              $ref: '#/externalDocs/x-mocks/Curate'
 definitions:
   Device:
     type: object
@@ -266,7 +260,7 @@ definitions:
       data:
         type: array
         items:
-          - $ref: '#/definitions/Device'
+          $ref: '#/definitions/Device'
     example:
       $ref: '#/externalDocs/x-mocks/DeviceList'
   DeviceUUIDs:
@@ -354,7 +348,7 @@ definitions:
         description: Who signed (processed) this message
         type: array
         items:
-          - type: string
+          type: string
       data:
         description: response data of this request (like HTTP Body)
         type: object
@@ -377,7 +371,7 @@ definitions:
         description: ban time, it should between 60-3600
         type: number
     example:
-      $ref: '#/externalDocs/x-mocks/Curate'    
+      $ref: '#/externalDocs/x-mocks/Curate'
 externalDocs:
   url: 'http://#'
   x-mocks:
