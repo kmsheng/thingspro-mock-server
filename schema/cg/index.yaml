@@ -9039,7 +9039,6 @@ definitions:
     properties:
       interface:
         type: string
-        readOnly: true
         description: Indicate the interface name (readonly).
       gateway:
         type: string
@@ -9417,13 +9416,11 @@ definitions:
     properties:
       zone:
         description: TZ zone list with cca2 and TZ
-        readOnly: true
         type: array
         items:
           "$ref": "#/definitions/TimezoneZone"
       iso3166:
         description: ISO 3166 alpha-2 country codes
-        readOnly: true
         type: array
         items:
           "$ref": "#/definitions/TimezoneIso3166"
@@ -9783,11 +9780,9 @@ definitions:
       bssid:
         type: string
         description: BSSID (MAC) of a WiFi AP
-        readOnly: true
       ssid:
         type: string
         description: SSID of a WiFi AP.
-        readOnly: true
       frequency:
         type: string
         description: Frequency of a WiFi AP.
