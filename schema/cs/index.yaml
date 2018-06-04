@@ -266,7 +266,7 @@ definitions:
       data:
         type: array
         items:
-          - $ref: '#/definitions/Device'
+          $ref: '#/definitions/Device'
     example:
       $ref: '#/externalDocs/x-mocks/DeviceList'
   DeviceUUIDs:
@@ -354,7 +354,7 @@ definitions:
         description: Who signed (processed) this message
         type: array
         items:
-          - type: string
+          type: string
       data:
         description: response data of this request (like HTTP Body)
         type: object
