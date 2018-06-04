@@ -70,8 +70,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/Cellular"
-          examples:
-            application/json:
+            example:
             - id: 1
               name: wwan1
               mode: umts
@@ -143,8 +142,7 @@ paths:
           description: An Cellular interface settings.
           schema:
             "$ref": "#/definitions/Cellular"
-          examples:
-            application/json:
+            example:
               id: 1
               name: wwan1
               mode: umts
@@ -216,8 +214,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/Cellular"
-          examples:
-            application/json:
+            example:
               id: 1
               name: wwan1
               mode: umts
@@ -289,8 +286,7 @@ paths:
           description: firmware information of indicated Cellular interface.
           schema:
             "$ref": "#/definitions/CellularFirmwareInfo"
-          examples:
-            application/json:
+            example:
               switchable: true
               current:
                 fwver: 05.05.58.01
@@ -325,8 +321,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/CellularFirmwareEntry"
-          examples:
-            application/json:
+            example:
               fwver: 05.05.58.01
               config: ATT_005.029_001
               carrier: ATT
@@ -344,8 +339,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/CustomEquipment"
-          examples:
-            application/json:
+            example:
             - id: 1
               equipmentName: Promgram-1
               equipmentTags:
@@ -399,8 +393,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/CustomEquipment"
-          examples:
-            application/json:
+            example:
               id: 1
               equipmentName: Promgram-1
               equipmentTags:
@@ -468,8 +461,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/CustomEquipment"
-          examples:
-            application/json:
+            example:
               id: 1
               equipmentName: Promgram-1
               equipmentTags:
@@ -500,8 +492,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/DHCPServerCollection"
-          examples:
-            application/json:
+            example:
               status: true
               collection:
               - id: 1
@@ -535,8 +526,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/DHCPServer"
-          examples:
-            application/json:
+            example:
               id: 1
               name: eth0
               available: false
@@ -568,8 +558,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/DHCPServer"
-          examples:
-            application/json:
+            example:
               id: 1
               name: eth0
               available: false
@@ -599,8 +588,7 @@ paths:
           description: DNS
           schema:
             "$ref": "#/definitions/DNS"
-          examples:
-            application/json:
+            example:
               enableFixed: false
               fixedDns: []
               source: eth0
@@ -625,8 +613,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/DNS"
-          examples:
-            application/json:
+            example:
               enableFixed: false
               fixedDns: []
               source: eth0
@@ -650,8 +637,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/Ethernet"
-          examples:
-            application/json:
+            example:
             - id: 1
               wan: true
               name: eth0
@@ -714,8 +700,7 @@ paths:
           description: An Ethernet interface settings.
           schema:
             "$ref": "#/definitions/Ethernet"
-          examples:
-            application/json:
+            example:
               id: 1
               wan: true
               name: eth0
@@ -749,8 +734,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/Ethernet"
-          examples:
-            application/json:
+            example:
               id: 1
               wan: true
               name: eth0
@@ -808,8 +792,7 @@ paths:
           description: sucess
           schema:
             "$ref": "#/definitions/UrlInfo"
-          examples:
-            application/json:
+            example:
               url: https://localhost/api/v1/files/upload
       tags:
       - import-export
@@ -830,8 +813,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/LogProfile"
-          examples:
-            application/json:
+            example:
             - id: 1
               name: log-profile-1
               enable: true
@@ -926,8 +908,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/DestinationEntry"
-          examples:
-            application/json:
+            example:
             - name: Internal
               directory: "/var/mxlogariver"
             - name: SD
@@ -949,8 +930,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/LogProfile"
-          examples:
-            application/json:
+            example:
               id: 1
               name: log-profile-1
               enable: true
@@ -1012,8 +992,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/LogProfile"
-          examples:
-            application/json:
+            example:
               id: 1
               name: log-profile-1
               enable: true
@@ -1084,8 +1063,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/LogProfile"
-          examples:
-            application/json:
+            example:
               id: 1
               name: log-profile-1
               enable: true
@@ -1145,8 +1123,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/LogListEquipment"
-          examples:
-            application/json:
+            example:
             - equipmentType: modbus
               equipmentName: My-other-ioLogik-E2242
               equipmentTags:
@@ -1204,8 +1181,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/ModbusSlave"
-          examples:
-            application/json:
+            example:
               enable: true
               host: 0.0.0.0
               port: 502
@@ -1229,8 +1205,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/ModbusSlave"
-          examples:
-            application/json:
+            example:
               enable: true
               host: 0.0.0.0
               port: 502
@@ -1251,8 +1226,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/MappingEntry"
-          examples:
-            application/json:
+            example:
             - id: 1
               reference: '0x40000'
               quantity: 1
@@ -1276,8 +1250,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/MappingEntry"
-          examples:
-            application/json:
+            example:
               id: 1
               reference: '0x40000'
               quantity: 1
@@ -1305,8 +1278,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/MappingEntry"
-          examples:
-            application/json:
+            example:
             - id: 1
               reference: '0x40000'
               quantity: 1
@@ -1347,8 +1319,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/MappingEntry"
-          examples:
-            application/json:
+            example:
               id: 1
               reference: '0x40000'
               quantity: 1
@@ -1381,8 +1352,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/MappingEntry"
-          examples:
-            application/json:
+            example:
               id: 1
               reference: '0x40000'
               quantity: 1
@@ -1401,8 +1371,7 @@ paths:
           description: Get OpenVPN setting success.
           schema:
             "$ref": "#/definitions/OpenVPN"
-          examples:
-            application/json:
+            example:
               enable: true
               ovpnFileExist: true
               connection: true
@@ -1425,8 +1394,7 @@ paths:
           description: Update OpenVPN setting success.
           schema:
             "$ref": "#/definitions/OpenVPN"
-          examples:
-            application/json:
+            example:
               enable: true
               ovpnFileExist: true
               connection: true
@@ -1450,8 +1418,7 @@ paths:
           description: Upload success.
           schema:
             "$ref": "#/definitions/OpenVPNConfigURL"
-          examples:
-            application/json:
+            example:
               url: http://192.168.31.113:18080/url
       tags:
       - openvpn
@@ -1494,8 +1461,7 @@ paths:
           description: Upload success.
           schema:
             "$ref": "#/definitions/OpenVPNConfigURL"
-          examples:
-            application/json:
+            example:
               url: http://192.168.31.113:18080/url
       tags:
       - openvpn
@@ -1509,8 +1475,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Programs"
-          examples:
-            application/json:
+            example:
             - id: 1
               name: my-user-program
               enable: true
@@ -1549,8 +1514,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/Program"
-          examples:
-            application/json:
+            example:
               id: 1
               name: my-user-program
               enable: true
@@ -1590,8 +1554,8 @@ paths:
               count:
                 type: number
                 description: Affected number of rows
-          examples:
-            count: 1
+            example:
+              count: 1
       tags:
       - program
       security:
@@ -1609,8 +1573,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Program"
-          examples:
-            application/json:
+            example:
               id: 1
               name: my-user-program
               enable: true
@@ -1643,8 +1606,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/Program"
-          examples:
-            application/json:
+            example:
               id: 1
               name: my-user-program
               enable: true
@@ -1676,8 +1638,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Download"
-          examples:
-            application/json:
+            example:
               url: http://download/file
       tags:
       - program
@@ -1706,8 +1667,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/RemoteControl"
-          examples:
-            application/json:
+            example:
               enable: true
               deviceUUID: f71b4639-d7bb-4fc3-9ee6-c8d08d47f227
               keepalive: 60
@@ -1732,8 +1692,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/RemoteControl"
-          examples:
-            application/json:
+            example:
               enable: true
               deviceUUID: f71b4639-d7bb-4fc3-9ee6-c8d08d47f227
               keepalive: 60
@@ -1759,8 +1718,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/TestResult"
-          examples:
-            application/json:
+            example:
               status: success
               log: connected to xxxx
       tags:
@@ -1778,8 +1736,7 @@ paths:
           description: Default Route
           schema:
             "$ref": "#/definitions/DefaultRoute"
-          examples:
-            application/json:
+            example:
               interface: eth0
               gateway: 192.168.3.254
               priorityList:
@@ -1803,8 +1760,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/DefaultRoute"
-          examples:
-            application/json:
+            example:
               priorityList:
               - wwan0
               - eth0
@@ -1820,8 +1776,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Serials"
-          examples:
-            application/json:
+            example:
             - id: 1
               dev: "/dev/ttyM0"
               devDisplayName: PORT-1
@@ -1851,8 +1806,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Serial"
-          examples:
-            application/json:
+            example:
               id: 1
               dev: "/dev/ttyM0"
               devDisplayName: PORT-1
@@ -1874,8 +1828,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Serial"
-          examples:
-            application/json:
+            example:
               id: 1
               dev: "/dev/ttyM0"
               devDisplayName: PORT-1
@@ -1894,8 +1847,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/Service"
-          examples:
-            application/json:
+            example:
             - id: 1
               enable: true
               name: ssh
@@ -1926,8 +1878,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Service"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               name: ssh
@@ -1948,8 +1899,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Service"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               name: ssh
@@ -1972,8 +1922,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/SystemStatus"
-          examples:
-            application/json:
+            example:
               hostname: Moxa
               version: 1.1.0-1
               uptimeSec: 312956
@@ -2014,8 +1963,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/SystemStatus"
-          examples:
-            application/json:
+            example:
               hostname: Moxa
               version: 1.1.0-1
               uptimeSec: 312956
@@ -2067,8 +2015,7 @@ paths:
           description: sucess
           schema:
             "$ref": "#/definitions/UrlInfo"
-          examples:
-            application/json:
+            example:
               url: https://www.google.com
       tags:
       - status
@@ -2082,8 +2029,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/NetworkInterfaces"
-          examples:
-            application/json:
+            example:
             - tunl0
             - eth0
             - eth1
@@ -2112,11 +2058,10 @@ paths:
       description: Get system properties
       responses:
         '200':
+          description: success
           schema:
             "$ref": "#/definitions/SystemProperties"
-          description: success
-          examples:
-            application/json:
+            example:
               gps:
                 lat: 121.123
                 lng: 22.456
@@ -2135,11 +2080,11 @@ paths:
       description: Get specific system property
       responses:
         '200':
+          description: success
           schema:
             allOf:
             - "$ref": "#/definitions/SystemProperties/properties/aliasName"
             - "$ref": "#/definitions/SystemProperties/properties/gps"
-          description: success
           examples:
             application/json:
               lat: 121.123
@@ -2159,8 +2104,8 @@ paths:
       responses:
         '200':
           description: success
-          examples:
-            application/json:
+          schema:
+            example:
               lat: 121.123
               lng: 22.456
       tags:
@@ -2175,8 +2120,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Equipments"
-          examples:
-            application/json:
+            example:
             - equipmentName: SYSTEM
               equipmentTags:
               - name: cpu_usage
@@ -2206,8 +2150,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Time"
-          examples:
-            application/json:
+            example:
               time: '2015-03-26T16:27:48.611441Z'
               timezone: Asia/Taipei
               ntp:
@@ -2231,8 +2174,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Time"
-          examples:
-            application/json:
+            example:
               time: '2015-03-26T16:27:48.611441Z'
               timezone: Asia/Taipei
               ntp:
@@ -2251,8 +2193,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Timezone"
-          examples:
-            application/json:
+            example:
               zone:
               - cca2: AD
                 name: Europe/Andorra
@@ -2312,8 +2253,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/WiFiIface"
-          examples:
-            application/json:
+            example:
             - id: 1
               name: wlan0
               product: WPEQ-353ACNI
@@ -2380,8 +2320,7 @@ paths:
           description: An WiFi interface settings.
           schema:
             "$ref": "#/definitions/WiFiIface"
-          examples:
-            application/json:
+            example:
               id: 1
               name: wlan0
               product: WPEQ-353ACNI
@@ -2448,8 +2387,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/WiFiIface"
-          examples:
-            application/json:
+            example:
               id: 1
               name: wlan0
               product: WPEQ-353ACNI
@@ -2523,8 +2461,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/WiFiIfaceBlacklist"
-          examples:
-            application/json:
+            example:
               id: 1
               mac: 01:23:45:67:89:0a
               description: test1
@@ -2543,8 +2480,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/WiFiIfaceBlacklist"
-          examples:
-            application/json:
+            example:
             - id: 1
               mac: 01:23:45:67:89:0a
               description: test1
@@ -2571,8 +2507,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/WiFiIfaceBlacklist"
-          examples:
-            application/json:
+            example:
             - id: 1
               mac: 01:23:45:67:89:0a
               description: test1
@@ -2621,8 +2556,7 @@ paths:
 '
           schema:
             "$ref": "#/definitions/WiFiIfaceBlacklist"
-          examples:
-            application/json:
+            example:
               id: 1
               mac: 01:23:45:67:89:0a
               description: test1
@@ -2647,8 +2581,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/WiFiIfaceBlacklist"
-          examples:
-            application/json:
+            example:
               id: 1
               mac: 01:23:45:67:89:0a
               description: test1
@@ -2692,8 +2625,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/WiFiAP"
-          examples:
-            application/json:
+            example:
             - ssid: test
               bssid: 01:23:45:67:89:0a
               signal: -43
@@ -2713,8 +2645,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/EquipmentTemplate"
-          examples:
-            application/json:
+            example:
             - id: 1
               name: ioLogik-E1210
               tagList:
@@ -4815,8 +4746,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/EquipmentTemplate"
-          examples:
-            application/json:
+            example:
               id: 9
               name: ioLogik-E1260
               tagList:
@@ -4900,8 +4830,7 @@ paths:
             items:
               description: Target equipment template IDs
               type: integer
-          examples:
-            application/json:
+            example:
             - id: 1
               name: ioLogik-E1210
               tagList:
@@ -7002,8 +6931,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/EquipmentTemplate"
-          examples:
-            application/json:
+            example:
               id: 9
               name: ioLogik-E1260
               tagList:
@@ -7090,8 +7018,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/EquipmentTemplate"
-          examples:
-            application/json:
+            example:
               id: 9
               name: ioLogik-E1260
               tagList:
@@ -7184,8 +7111,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/Interface"
-          examples:
-            application/json:
+            example:
             - id: 1
               name: Modbus_Gateway_1
               type: modbus-rtu
@@ -7232,8 +7158,7 @@ paths:
           description: sucess
           schema:
             "$ref": "#/definitions/Interface"
-          examples:
-            application/json:
+            example:
               id: 1
               name: Modbus_Gateway_1
               type: modbus-rtu
@@ -7260,8 +7185,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Interface"
-          examples:
-            application/json:
+            example:
               id: 1
               name: Modbus_Gateway_1
               type: modbus-rtu
@@ -7293,8 +7217,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/Interface"
-          examples:
-            application/json:
+            example:
               id: 1
               name: Modbus_Gateway_1
               type: modbus-rtu
@@ -7332,8 +7255,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/ModbusListEquipment"
-          examples:
-            application/json:
+            example:
             - equipmentName: LIGHT
               equipmentTags:
               - name: di0
@@ -7399,8 +7321,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/PortMapping"
-          examples:
-            application/json:
+            example:
             - id: 1
               enable: true
               service: http
@@ -7441,8 +7362,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/PortMapping"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               service: http
@@ -7484,8 +7404,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/PortMapping"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               service: http
@@ -7520,8 +7439,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/PortMapping"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               service: http
@@ -7557,8 +7475,7 @@ paths:
             type: array
             items:
               "$ref": "#/definitions/SSNAT"
-          examples:
-            application/json:
+            example:
             - id: 1
               enable: true
               priority: 0
@@ -7597,8 +7514,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/SSNAT"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               priority: 0
@@ -7638,8 +7554,7 @@ paths:
           description: success
           schema:
             "$ref": "#/definitions/SSNAT"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               priority: 0
@@ -7672,8 +7587,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/SSNAT"
-          examples:
-            application/json:
+            example:
               id: 1
               enable: true
               priority: 0
@@ -7704,8 +7618,7 @@ paths:
           description: status
           schema:
             "$ref": "#/definitions/FirewallWanHttps"
-          examples:
-            application/json:
+            example:
               enable: false
       tags:
       - iptables
@@ -7724,8 +7637,7 @@ paths:
           description: OK
           schema:
             "$ref": "#/definitions/FirewallWanHttps"
-          examples:
-            application/json:
+            example:
               enable: false
       tags:
       - iptables
