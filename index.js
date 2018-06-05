@@ -101,13 +101,17 @@ var createMockServer = function(options, cb) {
 
         app.listen(options.port, function() {
           debug('Visit http://%s:%d', options.host, options.port);
-          cb();
+          if (typeof cb === 'function') {
+            cb();
+          }
         });
       });
     })
     .catch(function(err) {
       debug(err);
-      cb(err);
+      if (typeof cb === 'function') {
+        cb(err);
+      }
     });
 }
 
