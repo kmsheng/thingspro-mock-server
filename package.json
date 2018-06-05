@@ -14,7 +14,10 @@
     "type": "git",
     "url": "git+https://github.com/Sanji-IO/sanji-openapi-mock.git"
   },
-  "keywords": ["sanji", "openapi"],
+  "keywords": [
+    "sanji",
+    "openapi"
+  ],
   "author": "YuLun Shih",
   "license": "MIT",
   "bugs": {
