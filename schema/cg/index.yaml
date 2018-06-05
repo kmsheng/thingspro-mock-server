@@ -1,12 +1,12 @@
 ---
 swagger: '2.0'
 info:
-  version: 2.1.0
+  version: "1.0.0"
   title: ThingsPro Gateway RESTful API reference
-basePath: "/api/v1"
-schemes:
-- http
-- https
+# basePath: "/api/v1"
+# schemes:
+# - http
+# - https
 produces:
 - application/json
 securityDefinitions:
@@ -16,6 +16,8 @@ securityDefinitions:
     in: header
     description: ThingsPro RESTful API token, The token should be created on web console.
 tags:
+- name: cv-aliyun
+  description: Cloud client application Aliyun
 - name: cellular
   description: Provides the cellular configuration interface
 - name: custom-equipment
@@ -57,6 +59,79 @@ tags:
 - name: modbus
   description: Handles Modbus framework configuration
 paths:
+  "/cv/aliyun":
+    get:
+      description: get all cofiguration settings of aliyun bundle
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/AliyunBundleResponse"
+      tags:
+      - cv-aliyun
+      security:
+      - mx-api-token: []
+    put:
+      description: update all cofiguration settings of aliyun bundle
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/AliyunBundleResponse"
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/AliyunBundleResponse"
+      tags:
+      - cv-aliyun
+      security:
+      - mx-api-token: []
+  "/CCS/aliyun":
+    put:
+      description: update cloud connection status(CCS)
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/CCSParameter"
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/CCSResponse"
+      tags:
+      - cv-aliyun
+      security:
+      - mx-api-token: []
+  "/MDays/aliyun":
+    put:
+      description: update Max stored days for log
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/MdaysParameter"
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/MdaysResponse"
+      tags:
+      - cv-aliyun
+      security:
+      - mx-api-token: []
   "/network/cellulars":
     get:
       summary: Cellular Interface(s)
@@ -7644,6 +7719,222 @@ paths:
       security:
       - mx-api-token: []
 definitions:
+  AliyunBundleResponse:
+    title: aliyun bundle factory setting
+    description: aliyun bundle factory setting
+    properties:
+      enable:
+        type: boolean
+        description: enable cloud or not
+      cloud_conn_status:
+        type: boolean
+        description: current cloud connection status
+      primary_end_point:
+        type: string
+        description: primary end point of aliyun setting
+      select_protocol:
+        type: string
+        description: the data upload protocol
+      primary_product_key:
+        type: string
+        description: product key of aliyun setting
+      device_name:
+        type: string
+        description: device name of aliyun setting
+      subscribe_topic:
+        type: string
+        description: subscribe topic of aliyun setting
+      device_id:
+        type: string
+        description: device id of aliyun setting
+      device_secret:
+        type: string
+        description: device secret of aliyun setting
+      test:
+        type: array
+        description: all selected tags'
+      log_on_dis:
+        type: boolean
+        description: log on disconnect or not
+      log_dist:
+        type: string
+        description: log dist when disconnect
+      max_storage:
+        type: string
+        description: max storage of discoonnected log
+      max_store_days:
+        type: string
+        description: max storage day of discoonnected log
+    example:
+      primary_product_key: fxaYbxGdz3F
+      primary_end_point: iot-as-coap.cn-shanghai.aliyuncs.com
+      subscribe_topic: iot_test
+      cloud_conn_status: true
+      log_dist: "/var/mxc"
+      primaryAPIKey: moxa
+      max_store_days: 3.3 days
+      max_storage: '200'
+      enable: true
+      deviceId: moxa
+      select_protocol: mqtt
+      device_id: aliyun_iot_test_id1
+      device_name: aliyun_iot_test
+      device_secret: MqQYuoGMyVtfFkpYVxwvWG7jJiEhEtOb
+      test:
+      - logDescription: false
+        name: di0
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di1
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di2
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di3
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di10
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di11
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di12
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di13
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di14
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+      - logDescription: false
+        name: di15
+        dataType: boolean
+        logDataType: false
+        equipmentType: modbus
+        equipmentName: test_device
+        logOnChange: false
+        logUnit: false
+        unit: ''
+        description: ''
+  CCSParameter:
+    title: CCS
+    description: update cloud client status parameter
+    properties:
+      status:
+        type: string
+        description: connection status
+    example:
+      status: 'true'
+  CCSResponse:
+    title: CCSResponse
+    description: update cloud client status response
+    properties:
+      data:
+        type: array
+        description: connection status response
+      event:
+        type: string
+        description: event uri
+      key:
+        type: string
+        description: key of connection status
+    example:
+      data:
+        cloud_conn_status: 'true'
+      event: CCS/aliyun
+      key: cloud_conn_status
+  MdaysParameter:
+    title: CCS
+    description: update max stored days for log parameter
+    properties:
+      value:
+        type: string
+        description: the max days
+    example:
+      value: '4.5'
+  MdaysResponse:
+    title: CCSResponse
+    description: update max stored days for log response
+    properties:
+      data:
+        type: array
+        description: connection status response
+      event:
+        type: string
+        description: event uri
+      key:
+        type: string
+        description: key of connection status
+    example:
+      data:
+        max_store_days: '4.5'
+      event: MDays/aliyun
+      key: max_store_days
   Cellular:
     title: Cellular
     required:
@@ -8946,8 +9237,6 @@ definitions:
       log: connected to xxxx
   DefaultRoute:
     title: DefaultRoute
-    required:
-    - interface
     properties:
       interface:
         type: string
@@ -9322,9 +9611,6 @@ definitions:
   Timezone:
     description: Timezone information
     type: object
-    required:
-    - zone
-    - iso3166
     properties:
       zone:
         description: TZ zone list with cca2 and TZ
@@ -9685,9 +9971,6 @@ definitions:
         description: Description of the MAC address.
   WiFiAP:
     title: WiFi AP Information
-    required:
-    - bssid
-    - ssid
     properties:
       bssid:
         type: string
@@ -10390,3 +10673,9 @@ definitions:
         description: Indicate to enable (true) or disable (false) the rule.
     example:
       enable: false
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /CPtung/tpAPI/1.0.0
+schemes:
+ - https
+ - http
