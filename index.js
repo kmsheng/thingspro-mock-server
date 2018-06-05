@@ -118,6 +118,8 @@ var createMockServer = function(options, cb) {
         cb(err);
       }
     });
+
+  return app;
 }
 
 module.exports =  createMockServer;
