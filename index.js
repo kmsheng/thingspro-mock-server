@@ -5,6 +5,7 @@ var middleware = require('swagger-express-middleware');
 var resolve = require('json-refs').resolveRefs;
 var YAML = require('js-yaml');
 var fs = require('fs');
+var joinPath = require('path').join;
 
 var app = express();
 var defaultOptions = {
@@ -30,6 +31,7 @@ var injectMockResponse = function (results, options) {
     const method = _.lowerCase(req.method);
     const pathObj = results.resolved.paths;
     const paths = Object.keys(pathObj);
+    const basePath = results.resolved.basePath;
 
     if (method === 'delete') {
       return res.json(req.body);
@@ -37,7 +39,10 @@ var injectMockResponse = function (results, options) {
 
     for (const path of paths) {
       // for example, /network/interfaces/{id} to /network/interfaces/([^/])
-      const replacedPath = path.replace(/{.+}/, '([^/]+)');
+      let replacedPath = path.replace(/{.+}/, '([^/]+)');
+      if (basePath) {
+        replacedPath = joinPath(basePath, replacedPath);
+      }
       const matchRoute = new RegExp(`^${replacedPath}$$`).test(req.path);
 
       if (matchRoute) {
