@@ -105,6 +105,8 @@ var createMockServer = function(options, cb) {
       debug(err);
       cb(err);
     });
+
+  return app;
 }
 
 module.exports =  createMockServer;
