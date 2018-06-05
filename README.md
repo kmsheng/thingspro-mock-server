@@ -24,5 +24,6 @@ visit http://localhost:8000 a resolved json version would be provided.
     -I, --input <path>  Input Folder (default: current working directory)
     -P, --port <port>   PORT of server (default: 8000)
     -H, --host <host>   HOST of server (default: 0.0.0.0)
+    -F, --filename <filename> Filename (default: index.yaml)
 ```
 
