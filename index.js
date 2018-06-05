@@ -52,6 +52,10 @@ var injectMockResponse = function (results, options) {
         if ((method === 'put') && shouldOverrideResponse) {
           return res.json(Object.assign({}, example, req.body));
         }
+
+        if ((method === 'post') && (typeof example.id === 'number')) {
+          return res.json(Object.assign({}, example, {id: _.random(1, Number.MAX_SAFE_INTEGER)}));
+        }
         return res.json(example);
       }
     }
