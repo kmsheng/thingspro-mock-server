@@ -10,7 +10,8 @@ var joinPath = require('path').join;
 var app = express();
 var defaultOptions = {
   host: '0.0.0.0',
-  port: process.env.PORT || 8000
+  port: process.env.PORT || 8000,
+  filename: 'index.yaml'
 };
 
 var aggregate = function(data) {
@@ -71,7 +72,7 @@ var injectMockResponse = function (results, options) {
 var createMockServer = function(options, cb) {
   options = _.defaults(options, defaultOptions);
   var doc = YAML.load(
-    fs.readFileSync(options.rootFolderPath + '/index.yaml').toString());
+    fs.readFileSync(options.rootFolderPath + '/' + options.filename).toString());
   var resolveOptions = {
     relativeBase: options.rootFolderPath,
     loaderOptions: {

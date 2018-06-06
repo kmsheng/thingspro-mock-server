@@ -12,6 +12,7 @@ program
     path.join(process.cwd()))
   .option('-P, --port <port>', 'PORT of server (default: 8000)', parseInt)
   .option('-H, --host <host>', 'HOST of server (default: 0.0.0.0)')
+  .option('-F, --filename <filename>', 'Filename (default: index.yaml)')
   .parse(process.argv);
 
 debug({
@@ -24,7 +25,8 @@ var createMockServer = require('../');
 createMockServer({
   rootFolderPath: program.input,
   port: program.port,
-  host: program.host
+  host: program.host,
+  filename: program.filename
 }, function() {
   console.log('running...');
 });
