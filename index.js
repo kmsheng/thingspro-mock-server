@@ -87,6 +87,18 @@ var createMockServer = function(options, cb) {
       results.resolved.paths = aggregate(results.resolved.paths);
       results.resolved.definitions = aggregate(results.resolved.definitions);
 
+      app.use((req, res, next) => {
+
+        if (req.method === 'OPTIONS') {
+          res.header('Access-Control-Allow-Credentials', true);
+          res.header('Access-Control-Allow-Origin', req.headers.origin);
+          res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+          res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Authorization, mx-api-token, Content-Type, Accept');
+          return res.status(200).end();
+        }
+        next();
+      });
+
       app.get('/favicon.ico', function(req, res) {
         res.status(404);
       });
