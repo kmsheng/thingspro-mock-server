@@ -41,4 +41,17 @@ test.cb('GET /network/cellulars', t => {
     });
 });
 
+test.cb('GET /network/cellulars/1', t => {
+
+  t.context.get('/network/cellulars/1')
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      t.snapshot(res.body);
+      t.end();
+    });
+});
+
 test.after(t => t.context.server.close());
