@@ -20,6 +20,13 @@ test.before(async t => {
       .get(path.join(basePath, url))
       .set('mx-api-token', '12345678');
   };
+
+  t.context.put = (url, data) => {
+    return request(app)
+      .put(url)
+      .set('mx-api-token', '12345678')
+      .send(data);
+  };
 });
 
 test.cb('GET /network/cellulars', t => {
