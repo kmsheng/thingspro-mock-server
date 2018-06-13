@@ -6,6 +6,7 @@ import path from 'path';
 test.before(async t => {
 
   const basePath = '/api/v1';
+  const mxApiToken = '12345678';
 
   const {app, server} = await createMockServer({
     rootFolderPath: 'schema/cg/',
@@ -18,13 +19,13 @@ test.before(async t => {
   t.context.get = (url) => {
     return request(app)
       .get(path.join(basePath, url))
-      .set('mx-api-token', '12345678');
+      .set('mx-api-token', mxApiToken);
   };
 
   t.context.put = (url, data) => {
     return request(app)
       .put(url)
-      .set('mx-api-token', '12345678')
+      .set('mx-api-token', mxApiToken)
       .send(data);
   };
 });
