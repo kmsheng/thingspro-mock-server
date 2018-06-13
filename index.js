@@ -85,6 +85,8 @@ var createMockServer = function(options, cb) {
     }
   };
 
+  return new Promise((resolve, reject) => {
+
   resolveRefs(doc, resolveOptions)
     .then(function (results) {
 
@@ -121,12 +123,13 @@ var createMockServer = function(options, cb) {
           middleware.mock()
         );
 
-        app.listen(options.port, function() {
+        const server = app.listen(options.port, function() {
           debug('Visit http://%s:%d', options.host, options.port);
           if (typeof cb === 'function') {
             cb();
           }
         });
+        resolve({app, server});
       });
     })
     .catch(function(err) {
@@ -134,9 +137,9 @@ var createMockServer = function(options, cb) {
       if (typeof cb === 'function') {
         cb(err);
       }
+      reject(err);
     });
-
-  return app;
+  });
 }
 
 module.exports =  createMockServer;
