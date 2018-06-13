@@ -2,7 +2,7 @@ var _ = require('lodash');
 var debug = require('debug')('sanji:openapi:mock');
 var express = require('express');
 var middleware = require('swagger-express-middleware');
-var resolve = require('json-refs').resolveRefs;
+var resolveRefs = require('json-refs').resolveRefs;
 var YAML = require('js-yaml');
 var fs = require('fs');
 var joinPath = require('path').join;
@@ -85,7 +85,7 @@ var createMockServer = function(options, cb) {
     }
   };
 
-  resolve(doc, resolveOptions)
+  resolveRefs(doc, resolveOptions)
     .then(function (results) {
 
       results.resolved.paths = aggregate(results.resolved.paths);
