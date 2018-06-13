@@ -70,9 +70,12 @@ var injectMockResponse = function (results, options) {
 }
 
 var createMockServer = function(options, cb) {
+
   options = _.defaults(options, defaultOptions);
+
   var doc = YAML.load(
     fs.readFileSync(options.rootFolderPath + '/' + options.filename).toString());
+
   var resolveOptions = {
     relativeBase: options.rootFolderPath,
     loaderOptions: {
@@ -84,6 +87,7 @@ var createMockServer = function(options, cb) {
 
   resolve(doc, resolveOptions)
     .then(function (results) {
+
       results.resolved.paths = aggregate(results.resolved.paths);
       results.resolved.definitions = aggregate(results.resolved.definitions);
 
