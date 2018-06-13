@@ -3,15 +3,17 @@ import request from 'supertest';
 import createMockServer from '../../index.js';
 import path from 'path';
 
-test.beforeEach(t => {
+test.before(async t => {
 
   const basePath = '/api/v1';
 
-  const app = createMockServer({
+  const {app, server} = await createMockServer({
     rootFolderPath: 'schema/cg/',
     port: 8000,
     host: '0.0.0.0'
   });
+
+  t.context.server = server;
 
   t.context.get = (url) => {
     return request(app)
@@ -38,3 +40,5 @@ test.cb('GET /network/cellulars', t => {
       t.end();
     });
 });
+
+test.after(t => t.context.server.close());
