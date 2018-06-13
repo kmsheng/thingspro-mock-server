@@ -62,4 +62,17 @@ test.cb('GET /network/cellulars/1', t => {
     });
 });
 
+test.cb('PUT /network/cellulars/1', t => {
+
+  t.context.put('/network/cellulars/1', {whatever: true})
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      // default will return {} without injectMockResponse
+      t.snapshot(res.body);
+      t.end();
+    });
+});
+
 test.after(t => t.context.server.close());
