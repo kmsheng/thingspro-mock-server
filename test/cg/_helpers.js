@@ -12,7 +12,7 @@ export const get = (app, url) => {
 
 export const put = (app, url, data) => {
   return request(app)
-    .put(url)
+    .put(path.join(BASE_PATH, url))
     .set('mx-api-token', MX_API_TOKEN)
     .send(data);
 };
