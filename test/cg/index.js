@@ -69,7 +69,7 @@ test.cb('PUT /network/cellulars/1', t => {
       if (err) {
         throw err;
       }
-      // default will return {} without injectMockResponse
+      // result: {}
       t.snapshot(res.body);
       t.end();
     });
