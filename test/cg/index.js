@@ -1,12 +1,8 @@
-import path from 'path';
-import request from 'supertest';
 import test from 'ava';
 import createMockServer from '../../index.js';
+import {get, put} from './_helpers';
 
 test.before(async t => {
-
-  const basePath = '/api/v1';
-  const mxApiToken = '12345678';
 
   const {app, server} = await createMockServer({
     rootFolderPath: 'schema/cg/',
@@ -16,18 +12,9 @@ test.before(async t => {
 
   t.context.server = server;
 
-  t.context.get = (url) => {
-    return request(app)
-      .get(path.join(basePath, url))
-      .set('mx-api-token', mxApiToken);
-  };
+  t.context.get = get.bind(null, app);
 
-  t.context.put = (url, data) => {
-    return request(app)
-      .put(url)
-      .set('mx-api-token', mxApiToken)
-      .send(data);
-  };
+  t.context.put = put.bind(null, app);
 });
 
 test.cb('GET /network/cellulars', t => {
