@@ -45,4 +45,17 @@ test.cb('PUT /network/vrrp', t => {
     });
 });
 
+test.cb('GET /network/vrrp/interfaces', t => {
+
+  t.context.get('/network/vrrp/interfaces')
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      t.snapshot(res.body);
+      t.end();
+    });
+});
+
 test.after(t => t.context.server.close());
