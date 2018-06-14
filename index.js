@@ -87,58 +87,58 @@ var createMockServer = function(options, cb) {
 
   return new Promise((resolve, reject) => {
 
-  resolveRefs(doc, resolveOptions)
-    .then(function (results) {
+    resolveRefs(doc, resolveOptions)
+      .then(function (results) {
 
-      results.resolved.paths = aggregate(results.resolved.paths);
-      results.resolved.definitions = aggregate(results.resolved.definitions);
+        results.resolved.paths = aggregate(results.resolved.paths);
+        results.resolved.definitions = aggregate(results.resolved.definitions);
 
-      app.use((req, res, next) => {
+        app.use((req, res, next) => {
 
-        if (req.method === 'OPTIONS') {
-          res.header('Access-Control-Allow-Credentials', true);
-          res.header('Access-Control-Allow-Origin', req.headers.origin);
-          res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-          res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Authorization, mx-api-token, Content-Type, Accept');
-          return res.status(200).end();
-        }
-        next();
-      });
-
-      app.get('/favicon.ico', function(req, res) {
-        res.status(404);
-      });
-
-      app.get('/', function(req, res) {
-        res.json(results.resolved);
-      });
-
-      middleware(results.resolved, app, function(err, middleware) {
-        app.use(
-          middleware.metadata(),
-          middleware.CORS(),
-          middleware.parseRequest(),
-          middleware.validateRequest(),
-          injectMockResponse(results, options),
-          middleware.mock()
-        );
-
-        const server = app.listen(options.port, function() {
-          debug('Visit http://%s:%d', options.host, options.port);
-          if (typeof cb === 'function') {
-            cb();
+          if (req.method === 'OPTIONS') {
+            res.header('Access-Control-Allow-Credentials', true);
+            res.header('Access-Control-Allow-Origin', req.headers.origin);
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Authorization, mx-api-token, Content-Type, Accept');
+            return res.status(200).end();
           }
+          next();
         });
-        resolve({app, server});
+
+        app.get('/favicon.ico', function(req, res) {
+          res.status(404);
+        });
+
+        app.get('/', function(req, res) {
+          res.json(results.resolved);
+        });
+
+        middleware(results.resolved, app, function(err, middleware) {
+          app.use(
+            middleware.metadata(),
+            middleware.CORS(),
+            middleware.parseRequest(),
+            middleware.validateRequest(),
+            injectMockResponse(results, options),
+            middleware.mock()
+          );
+
+          const server = app.listen(options.port, function() {
+            debug('Visit http://%s:%d', options.host, options.port);
+            if (typeof cb === 'function') {
+              cb();
+            }
+          });
+          resolve({app, server});
+        });
+      })
+      .catch(function(err) {
+        debug(err);
+        if (typeof cb === 'function') {
+          cb(err);
+        }
+        reject(err);
       });
-    })
-    .catch(function(err) {
-      debug(err);
-      if (typeof cb === 'function') {
-        cb(err);
-      }
-      reject(err);
-    });
   });
 }
 
