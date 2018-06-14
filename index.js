@@ -2,7 +2,7 @@ var _ = require('lodash');
 var debug = require('debug')('sanji:openapi:mock');
 var express = require('express');
 var middleware = require('swagger-express-middleware');
-var resolve = require('json-refs').resolveRefs;
+var resolveRefs = require('json-refs').resolveRefs;
 var YAML = require('js-yaml');
 var fs = require('fs');
 var joinPath = require('path').join;
@@ -70,9 +70,12 @@ var injectMockResponse = function (results, options) {
 }
 
 var createMockServer = function(options, cb) {
+
   options = _.defaults(options, defaultOptions);
+
   var doc = YAML.load(
     fs.readFileSync(options.rootFolderPath + '/' + options.filename).toString());
+
   var resolveOptions = {
     relativeBase: options.rootFolderPath,
     loaderOptions: {
@@ -82,57 +85,61 @@ var createMockServer = function(options, cb) {
     }
   };
 
-  resolve(doc, resolveOptions)
-    .then(function (results) {
-      results.resolved.paths = aggregate(results.resolved.paths);
-      results.resolved.definitions = aggregate(results.resolved.definitions);
+  return new Promise((resolve, reject) => {
 
-      app.use((req, res, next) => {
+    resolveRefs(doc, resolveOptions)
+      .then(function (results) {
 
-        if (req.method === 'OPTIONS') {
-          res.header('Access-Control-Allow-Credentials', true);
-          res.header('Access-Control-Allow-Origin', req.headers.origin);
-          res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-          res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Authorization, mx-api-token, Content-Type, Accept');
-          return res.status(200).end();
-        }
-        next();
-      });
+        results.resolved.paths = aggregate(results.resolved.paths);
+        results.resolved.definitions = aggregate(results.resolved.definitions);
 
-      app.get('/favicon.ico', function(req, res) {
-        res.status(404);
-      });
+        app.use((req, res, next) => {
 
-      app.get('/', function(req, res) {
-        res.json(results.resolved);
-      });
-
-      middleware(results.resolved, app, function(err, middleware) {
-        app.use(
-          middleware.metadata(),
-          middleware.CORS(),
-          middleware.parseRequest(),
-          middleware.validateRequest(),
-          injectMockResponse(results, options),
-          middleware.mock()
-        );
-
-        app.listen(options.port, function() {
-          debug('Visit http://%s:%d', options.host, options.port);
-          if (typeof cb === 'function') {
-            cb();
+          if (req.method === 'OPTIONS') {
+            res.header('Access-Control-Allow-Credentials', true);
+            res.header('Access-Control-Allow-Origin', req.headers.origin);
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Authorization, mx-api-token, Content-Type, Accept');
+            return res.status(200).end();
           }
+          next();
         });
-      });
-    })
-    .catch(function(err) {
-      debug(err);
-      if (typeof cb === 'function') {
-        cb(err);
-      }
-    });
 
-  return app;
+        app.get('/favicon.ico', function(req, res) {
+          res.status(404);
+        });
+
+        app.get('/', function(req, res) {
+          res.json(results.resolved);
+        });
+
+        middleware(results.resolved, app, function(err, middleware) {
+          app.use(
+            middleware.metadata(),
+            middleware.CORS(),
+            middleware.parseRequest(),
+            middleware.validateRequest(),
+            injectMockResponse(results, options),
+            middleware.mock()
+          );
+
+          const server = app.listen(options.port, function() {
+            debug('Visit http://%s:%d', options.host, options.port);
+            if (typeof cb === 'function') {
+              cb();
+            }
+          });
+          resolve({app, server});
+        });
+      })
+      .catch(function(err) {
+        debug(err);
+        if (typeof cb === 'function') {
+          cb(err);
+        }
+        reject(err);
+      });
+  });
 }
 
 module.exports =  createMockServer;

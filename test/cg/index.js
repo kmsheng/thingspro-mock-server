@@ -1,23 +1,20 @@
 import test from 'ava';
-import request from 'supertest';
 import createMockServer from '../../index.js';
-import path from 'path';
+import {get, put} from './_helpers';
 
-test.beforeEach(t => {
+test.before(async t => {
 
-  const basePath = '/api/v1';
-
-  const app = createMockServer({
+  const {app, server} = await createMockServer({
     rootFolderPath: 'schema/cg/',
     port: 8000,
     host: '0.0.0.0'
   });
 
-  t.context.get = (url) => {
-    return request(app)
-      .get(path.join(basePath, url))
-      .set('mx-api-token', '12345678');
-  };
+  t.context.server = server;
+
+  t.context.get = get.bind(null, app);
+
+  t.context.put = put.bind(null, app);
 });
 
 test.cb('GET /network/cellulars', t => {
@@ -38,3 +35,31 @@ test.cb('GET /network/cellulars', t => {
       t.end();
     });
 });
+
+test.cb('GET /network/cellulars/1', t => {
+
+  t.context.get('/network/cellulars/1')
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      t.snapshot(res.body);
+      t.end();
+    });
+});
+
+test.cb('PUT /network/cellulars/1', t => {
+
+  t.context.put('/network/cellulars/1', {whatever: true})
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      // result: {}
+      t.snapshot(res.body);
+      t.end();
+    });
+});
+
+test.after(t => t.context.server.close());
