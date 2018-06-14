@@ -16,3 +16,10 @@ export const put = (app, url, data) => {
     .set('mx-api-token', MX_API_TOKEN)
     .send(data);
 };
+
+export const del = (app, url, data) => {
+  return request(app)
+    .del(path.join(BASE_PATH, url))
+    .set('mx-api-token', MX_API_TOKEN)
+    .send(data);
+};
