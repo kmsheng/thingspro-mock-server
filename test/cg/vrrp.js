@@ -1,6 +1,6 @@
 import test from 'ava';
 import createMockServer from '../../index.js';
-import {get, put} from './_helpers';
+import {get, put, del} from './_helpers';
 
 test.before(async t => {
 
@@ -15,6 +15,7 @@ test.before(async t => {
 
   t.context.get = get.bind(null, app);
   t.context.put = put.bind(null, app);
+  t.context.del = del.bind(null, app);
 });
 
 test.cb('GET /network/vrrp', t => {
