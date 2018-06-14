@@ -58,4 +58,17 @@ test.cb('GET /network/vrrp/interfaces', t => {
     });
 });
 
+test.cb('DELETE /network/vrrp/interfaces', t => {
+
+  t.context.del('/network/vrrp/interfaces', [1, 2, 3, 4, 5])
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      t.snapshot(res.body);
+      t.end();
+    });
+});
+
 test.after(t => t.context.server.close());
