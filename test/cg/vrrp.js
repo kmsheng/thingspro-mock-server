@@ -83,4 +83,24 @@ test.cb('GET /network/vrrp/interfaces/{id}', t => {
     });
 });
 
+test.cb('PUT /network/vrrp/interfaces/{id}', t => {
+
+  const data = {
+    enable: true,
+    interface: 'eth0',
+    vrid: 1,
+    virtualIp: '192.168.3.250'
+  };
+
+  t.context.put('/network/vrrp/interfaces/1', data)
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      t.snapshot(res.body)
+      t.end();
+    });
+});
+
 test.after(t => t.context.server.close());
