@@ -1,0 +1,480 @@
+swagger: '2.0'
+basePath: "/api/v1"
+info:
+  title: VRRP API
+  description: Provides the VRRP configuration interface
+  version: 0.1.0
+schemes:
+  - http
+  - https
+produces:
+  - application/json
+paths:
+  /network/vrrp:
+    options:
+      $ref: '#/definitions/default-CORS-response'
+    get:
+      description: |
+        Get VRRP setting
+      responses:
+        '200':
+          description: |
+            VRRP setting
+          schema:
+            $ref: '#/definitions/VrrpSetting'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpSettingExample'
+    put:
+      description: |
+        Update VRRP setting
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/VrrpSetting'
+      responses:
+        '200':
+          description: |
+            VRRP setting
+          schema:
+            $ref: '#/definitions/VrrpSetting'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpSettingExample'
+            x-override-response: true
+  /network/vrrp/interfaces:
+    options:
+      $ref: '#/definitions/default-CORS-response'
+    post:
+      description: |
+        Create new VRRP interface setting
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/VrrpEntry'
+      responses:
+        '200':
+          description: |
+            VRRP interface setting
+          schema:
+            $ref: '#/definitions/VrrpEntry_Id'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpEntryIdExample'
+    get:
+      description: |
+        Get all VRRP interface setting
+      responses:
+        '200':
+          description: |
+            All VRRP interface setting
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/VrrpEntry_Id'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpInterfacesExample'
+    put:
+      description: |
+        Update all VRRP interface setting
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/VrrpEntry_Id'
+      responses:
+        '200':
+          description: |
+            All VRRP interface setting
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/VrrpEntry_Id'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpInterfacesExample_Put'
+    delete:
+      description: |
+        Delete selected VRRP interface setting
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        '200':
+          description: |
+            Deleted ID of VRRP interface setting
+          schema:
+            type: array
+            items:
+              type: integer
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpInterfacesExample_Delete'
+  /network/vrrp/interfaces/{id}:
+    options:
+      $ref: '#/definitions/default-CORS-response'
+    parameters:
+      - name: id
+        in: path
+        type: integer
+        required: true
+    get:
+      description: |
+        Get VRRP interface setting
+      responses:
+        '200':
+          description: |
+            VRRP interface setting
+          schema:
+            $ref: '#/definitions/VrrpEntry'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpEntryExample'
+    put:
+      description: |
+        Update VRRP interface setting
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/VrrpEntry'
+      responses:
+        '200':
+          description: |
+            VRRP interface setting
+          schema:
+            $ref: '#/definitions/VrrpEntry'
+          examples:
+            application/json:
+              $ref: '#/externalDocs/x-mocks/VrrpEntryExample_Put'
+    delete:
+      description: |
+        Delete VRRP interface setting
+      responses:
+        '200':
+          description: |
+            Delete success
+
+definitions:
+  VrrpSetting:
+    title: VRRP Setting
+    required:
+    - enable
+    properties:
+      enable:
+        type: boolean
+        description: |
+          Enable VRRP Service
+      status:
+        type: boolean
+        description: |
+          VRRP Service status
+        readOnly: true
+    example:
+      $ref: '#/externalDocs/x-mocks/VrrpSettingExample'
+  VrrpEntry:
+    title: VRRP Entry
+    required:
+    - enable
+    - interface
+    - vrid
+    - virtualIp
+    properties:
+      enable:
+        type: boolean
+        description: |
+          Enable entry
+        default: false
+      interface:
+        type: string
+        description: |
+          Network interface for VRRP
+      vrid:
+        type: integer
+        description: |
+          VRRP Virtual Router ID
+        minimum: 1
+        maximum: 255
+      virtualIp:
+        type: string
+        description: |
+          VRRP Virtual IP
+        pattern: ^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$
+      ip:
+        type: string
+        description: |
+          IP of interface
+        readOnly: true
+      stats:
+        type: string
+        description: |
+          VRRP router status, one of `None`, `Init`, `Master`, `Backup`
+        readOnly: true
+      priority:
+        type: integer
+        description: |
+          Determines priority in a VRRP group
+        default: 100
+        minimum: 1
+        maximum: 254
+      auth:
+        type: string
+        description: |
+          Authentication type, one of `No Authentication`, `Simple Text Password`, `IP Authentication Header`
+        default: none
+        pattern: ^(none|simple|ah)$
+      password:
+        type: string
+        description: |
+          Authentication password, empty for `None`, `Simple` up to `8` bytes, `AH` up to `16` bytes
+        minLength: 0
+        maxLength: 16
+      advertInt:
+        type: integer
+        description: |
+          Advertisement interval
+        default: 1
+        minimum: 1
+        maximum: 255
+      preemption:
+        type: boolean
+        description: |
+          Preemption mode
+        default: true
+    example:
+      $ref: '#/externalDocs/x-mocks/VrrpEntryExample'
+  VrrpEntry_Id:
+    title: VRRP Entry with ID
+    required:
+    - id
+    - enable
+    - interface
+    - vrid
+    - virtualIp
+    properties:
+      id:
+        type: integer
+        description: |
+          Entry ID
+      enable:
+        type: boolean
+        description: |
+          Enable entry
+        default: false
+      interface:
+        type: string
+        description: |
+          Network interface for VRRP
+      vrid:
+        type: integer
+        description: |
+          VRRP Virtual Router ID
+        minimum: 1
+        maximum: 255
+      virtualIp:
+        type: string
+        description: |
+          VRRP Virtual IP
+        pattern: ^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$
+      ip:
+        type: string
+        description: |
+          IP of interface
+        readOnly: true
+      stats:
+        type: string
+        description: |
+          VRRP router status, one of `None`, `Init`, `Master`, `Backup`
+        readOnly: true
+      priority:
+        type: integer
+        description: |
+          Determines priority in a VRRP group
+        default: 100
+        minimum: 1
+        maximum: 254
+      auth:
+        type: string
+        description: |
+          Authentication type, one of `No Authentication`, `Simple Text Password`, `IP Authentication Header`
+        default: none
+        pattern: ^(none|simple|ah)$
+      password:
+        type: string
+        description: |
+          Authentication password, empty for `None`, `Simple` up to `8` bytes, `AH` up to `16` bytes
+        minLength: 0
+        maxLength: 16
+      advertInt:
+        type: integer
+        description: |
+          Advertisement interval
+        default: 1
+        minimum: 1
+        maximum: 255
+      preemption:
+        type: boolean
+        description: |
+          Preemption mode
+        default: true
+    example:
+      $ref: '#/externalDocs/x-mocks/VrrpEntryIdExample'
+
+  default-CORS-response:
+    description: >
+      The "OPTIONS" HTTP method is used for the CORS preflight request.
+      Basically, the client browser is asking the server for permission
+      to send the real HTTP request.
+    responses:
+      default:
+        description: >
+          Swagger-Server automatically handles the following CORS headers
+          without any special configuration on your part (you don't even
+          need to specify an OPTIONS operation in your Swagger spec).
+        headers:
+          Access-Control-Allow-Origin:
+            type: string
+            description: >
+              By default, Swagger-Server will echo back the `Origin`
+              request header (e.g. `http://yoursite.com`)
+          Access-Control-Allow-Credentials:
+            type: boolean
+            description: >
+              By default, Swagger-Server will return `true`.
+              This enables cookies.
+          Access-Control-Allow-Headers:
+            type: array
+            collectionFormat: csv
+            description: >
+              By default, Swagger-Server will echo back the
+              `Access-Control-Request-Headers` request header
+              (e.g. `Content-Type, X-Powered-By`)
+          Access-Control-Allow-Methods:
+            type: array
+            collectionFormat: csv
+            description: >
+              By default, Swagger-Server will return the list of operations
+              that are defined in your Swagger spec for the path
+              (e.g. `GET, POST, PUT, DELETE`)
+          Access-Control-Max-Age:
+            type: integer
+            description: >
+              By default, Swagger-Server will return `0` (zero). This
+              disables CORS caching by the client browser, which simplifies
+              development and debugging.  But feel free to change this to a
+              higher number when you go to production.
+
+
+externalDocs:
+  url: 'http://#'
+  x-mocks:
+    VrrpSettingExample:
+      {
+        "enable": false,
+        "status": false
+      }
+    VrrpInterfacesExample:
+      [
+        {
+          "id": 1,
+          "enable": true,
+          "interface": "eth0",
+          "vrid": 1,
+          "virtualIp": "192.168.3.250",
+          "ip": "192.168.3.1",
+          "status": "Init",
+          "priority": 100,
+          "auth": "none",
+          "password": "",
+          "advertInt": 1,
+          "preemption": true
+        },
+        {
+          "id": 2,
+          "enable": false,
+          "interface": "eth1",
+          "vrid": 2,
+          "virtualIp": "192.168.4.250",
+          "ip": "192.168.4.1",
+          "status": "None",
+          "priority": 100,
+          "auth": "simple",
+          "password": "Password",
+          "advertInt": 1,
+          "preemption": true
+        }
+      ]
+    VrrpInterfacesExample_Put:
+      [
+        {
+          "id": 1,
+          "enable": true,
+          "interface": "eth0",
+          "vrid": 1,
+          "virtualIp": "192.168.3.250"
+        },
+        {
+          "id": 2,
+          "enable": false,
+          "interface": "eth1",
+          "vrid": 2,
+          "virtualIp": "192.168.4.250",
+          "priority": 100,
+          "auth": "simple",
+          "password": "Password",
+          "advertInt": 1,
+          "preemption": true
+        }
+      ]
+    VrrpInterfacesExample_Delete:
+      [1, 2, 3]
+    VrrpEntryExample:
+      {
+        "enable": true,
+        "interface": "eth0",
+        "vrid": 1,
+        "virtualIp": "192.168.3.250",
+        "ip": "192.168.3.1",
+        "status": "Init",
+        "priority": 100,
+        "auth": "none",
+        "password": "",
+        "advertInt": 1,
+        "preemption": true
+      }
+    VrrpEntryExample_Put:
+      {
+        "enable": true,
+        "interface": "eth0",
+        "vrid": 1,
+        "virtualIp": "192.168.3.250"
+      }
+    VrrpEntryIdExample:
+      {
+          "id": 1,
+          "enable": true,
+          "interface": "eth0",
+          "vrid": 1,
+          "virtualIp": "192.168.3.250",
+          "ip": "192.168.3.1",
+          "status": "Init",
+          "priority": 100,
+          "auth": "none",
+          "password": "",
+          "advertInt": 1,
+          "preemption": true
+      }
