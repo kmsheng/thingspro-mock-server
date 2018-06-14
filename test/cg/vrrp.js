@@ -1,7 +1,7 @@
-import test from 'ava';
-import request from 'supertest';
-import createMockServer from '../../index.js';
 import path from 'path';
+import request from 'supertest';
+import test from 'ava';
+import createMockServer from '../../index.js';
 
 test.before(async t => {
 
