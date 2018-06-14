@@ -14,7 +14,6 @@ test.before(async t => {
   t.context.server = server;
 
   t.context.get = get.bind(null, app);
-
   t.context.put = put.bind(null, app);
 });
 
