@@ -32,4 +32,18 @@ test.cb('GET /network/vrrp', t => {
     });
 });
 
+test.cb('PUT /network/vrrp', t => {
+
+  t.context.put('/network/vrrp', {enable: true})
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      if (err) {
+        throw err;
+      }
+      // result: { enable: true, status: false }
+      t.snapshot(res.body);
+      t.end();
+    });
+});
+
 test.after(t => t.context.server.close());
