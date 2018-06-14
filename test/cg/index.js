@@ -26,11 +26,6 @@ test.cb('GET /network/cellulars', t => {
         throw err;
       }
       const [row] = res.body;
-
-      // 'id', 'name', 'mode', 'signal', 'operatorName',
-      // 'lac', 'tac', 'nid', 'cellId', 'bid', 'iccId', 'imsi', 'imei', 'esn',
-      // 'pinRetryRemain', 'status', 'mac', 'ip', 'netmask', 'gateway', 'dns',
-      // 'usage', 'enable', 'pdpContext', 'pinCode', 'keepalive'
       t.snapshot(Object.keys(row));
       t.end();
     });
@@ -56,7 +51,6 @@ test.cb('PUT /network/cellulars/1', t => {
       if (err) {
         throw err;
       }
-      // result: {}
       t.snapshot(res.body);
       t.end();
     });

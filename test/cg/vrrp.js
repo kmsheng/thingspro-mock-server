@@ -26,7 +26,6 @@ test.cb('GET /network/vrrp', t => {
       if (err) {
         throw err;
       }
-      // result: { enable: false, status: false }
       t.snapshot(res.body);
       t.end();
     });
